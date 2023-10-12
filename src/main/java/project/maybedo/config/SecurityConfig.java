@@ -1,4 +1,4 @@
-package project.maybedo.config.auth;
+package project.maybedo.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,7 +28,7 @@ public class SecurityConfig {
                 .and()
                 .formLogin()
                 .loginPage("/member/login")
-                .loginProcessingUrl("/member/login")  // 스프링 시큐리티가 해당 주소로 요청오는 로그인을 가로채서 대신 로그인해줌.
+                .loginProcessingUrl("/loginProc")  // 스프링 시큐리티가 해당 주소로 요청오는 로그인을 가로채서 대신 로그인해줌.
                 .defaultSuccessUrl("/");   // 로그인이 성공하면 해당 url로 넘어감
 
         return http.build();
