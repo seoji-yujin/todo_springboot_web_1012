@@ -1,4 +1,4 @@
-package project.maybedo.controller.dto;
+package project.maybedo.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

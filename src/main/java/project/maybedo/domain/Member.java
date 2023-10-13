@@ -2,6 +2,8 @@ package project.maybedo.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import project.maybedo.dto.MemberFormDto;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -33,4 +35,17 @@ public class Member {
 
     @OneToMany(mappedBy = "member")
     private List<Join> join_list = new ArrayList<>();
+
+
+    public static Member createMember(MemberFormDto memberFormDto, PasswordEncoder passwordEncoder){
+
+        Member member = new Member();
+        member.setName(memberFormDto.getName());
+        member.setEmail(memberFormDto.getEmail());
+        // 스프링 시큐리티 설정 클래스에 등록한 BcryptPasswordEncoder Bean을 파라미터로 넘겨서 비밀번호를 암호화
+        String password = passwordEncoder.encode(memberFormDto.getPasswd());
+        member.setPasswd(password);
+        return member;
+    }
+
 }

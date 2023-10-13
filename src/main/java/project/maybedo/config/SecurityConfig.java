@@ -1,36 +1,45 @@
 package project.maybedo.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import project.maybedo.service.MemberService;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+    @Autowired
+    MemberService memberService;
 
-    @Bean  // IoC가 된다
-    public BCryptPasswordEncoder encodePWD() {
-        return new BCryptPasswordEncoder();
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+//        http.formLogin()
+//                .loginPage("/member/login")
+//                .defaultSuccessUrl("/")
+//                .usernameParameter("email")
+//                .failureUrl("/member/login/error")
+//                .and()
+//                .logout()
+//                .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))
+//                .logoutSuccessUrl("/")
+//        ;
+        http
+                .csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/member/join", "/member/login", "/member/**").permitAll()
+        ;
+        return http.build();
     }
 
     @Bean
-    SecurityFilterChain configure(HttpSecurity http) throws Exception {
-        http
-                .csrf().disable()
-                .authorizeRequests()  // request가 들어오면
-                .antMatchers("/")  // 이와 같은 주소로 들어오면
-                .permitAll()
-                .anyRequest()  // 다른 모든 요청은
-                .authenticated()  // 인증이 되어야함, 인증이 되지 않은 요청은 무조건 로그인 폼으로 이동
-                .and()
-                .formLogin()
-                .loginPage("/member/login")
-                .loginProcessingUrl("/loginProc")  // 스프링 시큐리티가 해당 주소로 요청오는 로그인을 가로채서 대신 로그인해줌.
-                .defaultSuccessUrl("/");   // 로그인이 성공하면 해당 url로 넘어감
-
-        return http.build();
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
+
 }

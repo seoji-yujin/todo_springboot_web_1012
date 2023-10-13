@@ -1,31 +1,35 @@
 package project.maybedo.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import project.maybedo.domain.Member;
+import project.maybedo.dto.MemberFormDto;
 import project.maybedo.service.MemberService;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 public class MemberController {
 
     private final MemberService memberService;
+    private final PasswordEncoder passwordEncoder;
 
-    // 멤버 생성
-    @PostMapping("/member/new")
-    public String memberCreate(@RequestBody Member member) {  // @RequestBody가 알아서 member에 맞춰 넣어줌
-        memberService.join(member);
+    // 멤버 생성(회원 가입)
+    @PostMapping("/member/join")
+    public String memberCreate(@RequestBody MemberFormDto memberFormDto) {
+        Member member = Member.createMember(memberFormDto, passwordEncoder);
+        memberService.save(member);
         return ("member id" + member.getId());
     }
 
     // 로그인
     @GetMapping("/member/login")
     public String login() {
-        return ("MemberLoginForm");
+        return ("login 완료");
     }
 
     // 멤버 1명 조회
