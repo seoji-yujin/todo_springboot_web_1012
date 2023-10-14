@@ -15,16 +15,16 @@ import java.io.IOException;
 import java.util.List;
 
 @RequiredArgsConstructor
-@Controller
+@RestController
 public class MaybedoController {
 
     private final MaybedoService maybedoService;
 
     @RequestMapping("/maybedo")
-    public String list(Model model) {
-        List<Maybedo> maybedoList = this.maybedoService.getList();
+    public List<Maybedo> list(Model model) {
+        List<Maybedo> maybedoList = maybedoService.getList();
         model.addAttribute("maybedoList", maybedoList);
-        return "maybedolist";
+        return maybedoList;
     }
 
     @RequestMapping("/")
@@ -33,9 +33,9 @@ public class MaybedoController {
     }
 
     @PostMapping("/maybedo/create")
-    public String createMaybedo(@RequestParam String content) {
-        this.maybedoService.create(content);
-        return "redirect:/maybedo";
+    public Maybedo createMaybedo(@RequestParam String content) {
+        Maybedo maybedo = maybedoService.create(content);
+        return maybedo;
     }
 
     @DeleteMapping("/maybedo/delete/{id}")

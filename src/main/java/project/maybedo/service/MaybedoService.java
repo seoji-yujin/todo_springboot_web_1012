@@ -17,11 +17,12 @@ public class MaybedoService {
     public List<Maybedo> getList() {
         return this.maybedoRepository.findAll();
     }
-    public void create(String content){
+    public Maybedo create(String content){
         Maybedo maybedo = new Maybedo();
         maybedo.setContent(content);
         maybedo.setDate(new Date());
         this.maybedoRepository.save(maybedo);
+        return maybedo;
     }
 
     public void delete(Integer id) {
