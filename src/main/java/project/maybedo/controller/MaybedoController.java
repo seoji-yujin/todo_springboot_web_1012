@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import project.maybedo.controller.dto.ResponseDto;
 import project.maybedo.domain.Maybedo;
 import project.maybedo.repository.MaybedoRepository;
 import project.maybedo.service.MaybedoService;
@@ -15,39 +16,38 @@ import java.io.IOException;
 import java.util.List;
 
 @RequiredArgsConstructor
-@Controller
+@RestController
 public class MaybedoController {
 
     private final MaybedoService maybedoService;
 
+    //maybedo 리스트 조회
     @RequestMapping("/maybedo")
-    public String list(Model model) {
-        List<Maybedo> maybedoList = this.maybedoService.getList();
+    public ResponseDto<Integer> list(Model model) {
+        List<Maybedo> maybedoList = maybedoService.getList();
         model.addAttribute("maybedoList", maybedoList);
-        return "maybedolist";
+        return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
     }
 
-//    @RequestMapping("/")
-//    public String root() {
-//        return "main";
-//    }
-
+    //maybedo 작성
     @PostMapping("/maybedo/create")
-    public String createMaybedo(@RequestParam String content) {
-        this.maybedoService.create(content);
-        return "redirect:/maybedo";
+    public ResponseDto<Integer> createMaybedo(@RequestParam String content) {
+        maybedoService.create(content);
+        return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
     }
 
+    //maybedo 삭제
     @DeleteMapping("/maybedo/delete/{id}")
-    public String deleteMaybedo(@PathVariable Integer id) {
-        this.maybedoService.delete(id);
-        return "redirect:/maybedo";
+    public ResponseDto<Integer> deleteMaybedo(@PathVariable Integer id) {
+        maybedoService.delete(id);
+        return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
     }
 
+    //maybedo 수정
     @PutMapping("/maybedo/update/{id}")
-    public String updateMaybedo(@RequestParam String content, @PathVariable Integer id) {
-        this.maybedoService.update(id, content);
-        return "redirect:/maybedo";
+    public ResponseDto<Integer> updateMaybedo(@RequestParam String content, @PathVariable Integer id) {
+        maybedoService.update(id, content);
+        return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
     }
 
 }
