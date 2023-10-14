@@ -9,9 +9,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import project.maybedo.controller.dto.ResponseDto;
 import project.maybedo.domain.Maybedo;
+import project.maybedo.domain.Member;
 import project.maybedo.repository.MaybedoRepository;
 import project.maybedo.service.MaybedoService;
+import project.maybedo.service.MemberService;
 
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
@@ -20,6 +23,7 @@ import java.util.List;
 public class MaybedoController {
 
     private final MaybedoService maybedoService;
+    private final MemberService memberService;
 
     //maybedo 리스트 조회
     @RequestMapping("/maybedo")
@@ -31,8 +35,9 @@ public class MaybedoController {
 
     //maybedo 작성
     @PostMapping("/maybedo/create")
-    public ResponseDto<Integer> createMaybedo(@RequestParam String content) {
-        maybedoService.create(content);
+    public ResponseDto<Integer> createMaybedo(@RequestBody String content, HttpSession httpSession) {
+        Member member = (Member)httpSession.getAttribute("principal");
+        maybedoService.create(member, content);
         return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
     }
 
