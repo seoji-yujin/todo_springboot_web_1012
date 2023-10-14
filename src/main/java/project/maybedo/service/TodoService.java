@@ -61,7 +61,7 @@ public class TodoService
         return this.todoRepository.findAll();
     }
 
-    public List<Todo> getTodosByDate(LocalDate today){
-        return todoRepository.findByDate(today);
+    public List<Todo> getTodosByMemberAndDate(Member member, LocalDate today){
+        return todoRepository.findByMemberAndDate(member, today);
     }
 }
