@@ -14,9 +14,9 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id")
     private int id;
-    private String name;
+    private String username;
     private String email;
-    private String passwd;
+    private String password;
     private String message;
     private String photo_url;
     @OneToMany(mappedBy = "member")

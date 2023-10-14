@@ -2,6 +2,7 @@ package project.maybedo.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import project.maybedo.domain.Member;
 import project.maybedo.domain.Status;
 import project.maybedo.domain.Todo;
 import project.maybedo.repository.TodoRepository;
@@ -18,8 +19,9 @@ public class TodoService
     /**
      * 투두 작성
      */
-    public void create(String content) {
+    public void create(Member member, String content) {
         Todo todo = new Todo();
+        todo.setMember(member);
         todo.setContent(content);
         todo.setStatus(Status.YET);
         todo.setDate(new Date());

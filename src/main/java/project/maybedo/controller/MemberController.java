@@ -1,11 +1,14 @@
 package project.maybedo.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import project.maybedo.controller.dto.ResponseDto;
 import project.maybedo.domain.Member;
 import project.maybedo.service.MemberService;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RestController
@@ -14,17 +17,24 @@ public class MemberController {
 
     private final MemberService memberService;
 
-    // 멤버 생성
-    @PostMapping("/member/new")
-    public String memberCreate(@RequestBody Member member) {  // @RequestBody가 알아서 member에 맞춰 넣어줌
+    // 회원가입
+    @PostMapping("/member/join")
+    public ResponseDto<Integer> save(@RequestBody Member member) {
+        System.out.println("join 호출됨");
         memberService.join(member);
-        return ("member id" + member.getId());
+        return new ResponseDto<Integer> (HttpStatus.OK.value(), 1);
     }
 
     // 로그인
-    @GetMapping("/member/login")
-    public String login() {
-        return ("login");
+    @PostMapping("/member/login")
+    public ResponseDto<Integer> login(@RequestBody Member member, HttpSession session) {
+        System.out.println("login 호출됨");
+        Member principal = memberService.login(member);
+
+        if (principal != null) {
+            session.setAttribute("principal", principal);
+        }
+        return new ResponseDto<Integer> (HttpStatus.OK.value(), 1);
     }
 
     // 멤버 1명 조회
@@ -41,4 +51,6 @@ public class MemberController {
         model.addAttribute("memberlist", memberList);
         return (memberList);
     }
+
+
 }

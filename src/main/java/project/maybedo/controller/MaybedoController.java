@@ -27,10 +27,10 @@ public class MaybedoController {
         return "maybedolist";
     }
 
-    @RequestMapping("/")
-    public String root() {
-        return "redirect:/maybedo";
-    }
+//    @RequestMapping("/")
+//    public String root() {
+//        return "main";
+//    }
 
     @PostMapping("/maybedo/create")
     public String createMaybedo(@RequestParam String content) {
