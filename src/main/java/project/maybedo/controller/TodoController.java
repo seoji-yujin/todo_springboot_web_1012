@@ -58,7 +58,7 @@ public class TodoController {
 
     // 멤버 찾아와서 투두 작성
     @PostMapping("/todo/create")
-    public ResponseDto<Integer> writeTodo(@RequestParam String content, HttpSession session) {
+    public ResponseDto<Integer> writeTodo(@RequestBody String content, HttpSession session) {
         // 세션에서 사용자 정보를 가져옴
         Member member = (Member)session.getAttribute("principal");
         todoService.create(member, content);
