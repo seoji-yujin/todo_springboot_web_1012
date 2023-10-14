@@ -12,6 +12,8 @@ import project.maybedo.service.TodoService;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.servlet.http.HttpSession;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -28,12 +30,29 @@ public class TodoController {
         return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
     }
 
-   // 투두 작성
-//    @PostMapping("/todo/create")
-//    public ResponseDto<Integer> todoCreate(@RequestParam String content) {
-//        todoService.create(content);
-//        return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
-//    }
+    // 오늘의 투두 리스트 가져오기
+    @GetMapping("/today/todo")
+    public ResponseDto<Integer> getTodosForToday(Model model) {
+        LocalDate today = LocalDate.now();
+        List<Todo> todos = todoService.getTodosByDate(today);
+        model.addAttribute("todos", todos);
+
+        // 투두 목록을 로그에 출력
+        for (Todo todo : todos) {
+            System.out.println("Todo: " + todo.getContent());
+        }
+
+        return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
+    }
+
+    // 멤버 찾아와서 투두 작성
+    @PostMapping("/todo/create")
+    public ResponseDto<Integer> createTodo(@RequestBody Todo todo, HttpSession session) {
+        // 세션에서 사용자 정보를 가져옴
+        Member member = (Member)session.getAttribute("principal");
+        todoService.create(member, todo.getContent(), todo.getDate());
+        return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
+    }
 
     // 투두 완료 체크
     @PutMapping("/todo/done/{id}")
@@ -56,13 +75,5 @@ public class TodoController {
         return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
     }
 
-    // 멤버 찾아와서 투두 작성
-    @PostMapping("/todo/create")
-    public ResponseDto<Integer> writeTodo(@RequestBody String content, HttpSession session) {
-        // 세션에서 사용자 정보를 가져옴
-        Member member = (Member)session.getAttribute("principal");
-        todoService.create(member, content);
-        return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
-    }
 
 }
