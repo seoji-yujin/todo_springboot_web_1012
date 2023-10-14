@@ -17,9 +17,18 @@ public class MemberService {
 
     @Transactional
     public int join(Member member) {
-        return memberRepository.save(member).getId();
+        Member findMember = memberRepository.findByUsername(member.getUsername());
+        if (findMember == null)
+            return memberRepository.save(member).getId();
+        return (-1);
     }
 
+    // 중복 유저 체크
+    private void validateDuplicateMember(Member member){
+        Member findMember = memberRepository.findByUsername(member.getUsername());
+        if (findMember != null)
+            throw new IllegalStateException("이미 가입된 회원입니다.");
+    }
     
     @Transactional(readOnly = true)  // select할 때 트랜잭션 시작, 서비스 종료 시에 트랜잭션 종료(정합성)
     public Member login(Member member) {
