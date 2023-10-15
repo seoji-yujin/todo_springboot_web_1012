@@ -21,7 +21,8 @@ public class MemberController {
     @PostMapping("/member/join")
     public ResponseDto<Integer> save(@RequestBody Member member) {
         System.out.println("join 호출됨");
-        memberService.join(member);
+        if (memberService.join(member) == -1)
+            return new ResponseDto<Integer>(HttpStatus.OK.value(), -1);
         return new ResponseDto<Integer> (HttpStatus.OK.value(), 1);
     }
 
