@@ -38,4 +38,7 @@ public class GroupService {
         }
     }
 
+    // 그룹 가입
+
+
 }
