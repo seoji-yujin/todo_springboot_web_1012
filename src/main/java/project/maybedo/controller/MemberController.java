@@ -22,7 +22,7 @@ public class MemberController {
     public ResponseDto<Integer> save(@RequestBody Member member) {
         System.out.println("join 호출됨");
         if (memberService.join(member) == -1)
-            return new ResponseDto<Integer>(HttpStatus.FORBIDDEN.value(), -1);
+            return new ResponseDto<Integer>(HttpStatus.OK.value(), -1);
         return new ResponseDto<Integer> (HttpStatus.OK.value(), 1);
     }
 
