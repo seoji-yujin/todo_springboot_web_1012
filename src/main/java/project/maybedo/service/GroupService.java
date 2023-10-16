@@ -11,6 +11,7 @@ import project.maybedo.repository.JoinRepository;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -19,12 +20,11 @@ public class GroupService {
     private final GroupRepository groupRepository;
     private final JoinRepository joinRepository;
 
-    /**
-     * 그룹 생성
-     */
+    // 그룹 생성
     @Transactional
-    public void create(Member member , GroupDto groupDto) {
+    public void create(Member member, GroupDto groupDto) {
         Group group = new Group();
+        group.setLeader(member.getId());
         group.setName(groupDto.getName());
         group.setLimit_member(groupDto.getLimit_member());
         group.setDescription(groupDto.getDescription());
@@ -32,18 +32,38 @@ public class GroupService {
         groupRepository.save(group);
 
         Join join = new Join();
+        join.setGroup(group);
+        join.setMember(member);
         join.setDate(LocalDateTime.now());
         join.setLeader(Boolean.TRUE);
-        join.setMember(member);
-        join.setGroup(group);
-        System.out.println(group.getJoin_list());
-        // group join_list에 해당 멤버 추가해야함..
         joinRepository.save(join);
     }
 
-    /**
-     * 그룹에 멤버 추가
-     */
+    // 그룹 세부 사항 설정
+//    @Transactional
+//    public void setDetail(GroupDetailDto groupDetailDto)
+//    {
+//
+//    }
 
+    // 그룹 삭제
+    public void delete(Integer id)
+    {
+        Group group = groupRepository.findById(id)
+                .orElseThrow(()->new IllegalArgumentException("존재하지 않는 그룹 " + id));
+        groupRepository.delete(group);
+    }
 
+    // 그룹 가입
+    public void joinGroup(Member member, Integer id) {
+        Group group = groupRepository.findById(id)
+                .orElseThrow(()->new IllegalArgumentException("존재하지 않는 그룹 " + id));
+
+        Join join = new Join();
+        join.setGroup(group);
+        join.setMember(member);
+        join.setDate(LocalDateTime.now());
+        join.setLeader(Boolean.FALSE);
+        joinRepository.save(join);
+    }
 }

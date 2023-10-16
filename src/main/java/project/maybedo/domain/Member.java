@@ -13,7 +13,7 @@ public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id")
-    private int id;
+    private Integer id;
     private String username;
     private String email;
     private String password;
@@ -31,6 +31,6 @@ public class Member {
     @OneToMany(mappedBy = "member")
     private List<Message> message_list = new ArrayList<>();
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Join> join_list = new ArrayList<>();
 }

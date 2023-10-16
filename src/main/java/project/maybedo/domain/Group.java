@@ -14,12 +14,14 @@ public class Group {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "group_id")
-    private int id;
+    private Integer id;
+    private int leader;  // 그룹장의 아이디
     private String name;
     private LocalDateTime expire_date;
     private Long limit_member;
     private String description;
     private String photo_url;
+
     @OneToMany(mappedBy = "group")
     private List<GroupTodo> group_todo_list = new ArrayList<>();
 
@@ -32,7 +34,7 @@ public class Group {
     @OneToMany(mappedBy = "group")
     private List<Select> select_list = new ArrayList<>();
 
-    @OneToMany(mappedBy = "group")
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
     private List<Join> join_list = new ArrayList<>();
 
     @OneToMany(mappedBy = "group")

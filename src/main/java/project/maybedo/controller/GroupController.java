@@ -2,9 +2,7 @@ package project.maybedo.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import project.maybedo.controller.dto.GroupDto;
 import project.maybedo.controller.dto.ResponseDto;
 import project.maybedo.domain.Group;
@@ -25,4 +23,16 @@ public class GroupController {
         return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
     }
 
+    @DeleteMapping("/group/delete/{id}")
+    public ResponseDto<Integer> deleteGroup(@PathVariable Integer id) {
+        groupService.delete(id);
+        return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
+    }
+
+    @RequestMapping("group/join/{id}")
+    public ResponseDto<Integer> joinGroup(@PathVariable Integer id, HttpSession httpSession){
+        Member member = (Member)httpSession.getAttribute("principal");
+        groupService.joinGroup(member, id);
+        return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
+    }
 }

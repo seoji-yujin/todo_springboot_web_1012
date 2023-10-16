@@ -12,7 +12,7 @@ public class Join {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "join_id")
-    private Long id;
+    private Integer id;
 
     private LocalDateTime date;
     private Boolean Leader;
