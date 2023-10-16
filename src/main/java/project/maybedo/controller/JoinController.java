@@ -23,7 +23,7 @@ public class JoinController {
     public ResponseDto<Integer> joinGroup(@PathVariable int group_id, HttpSession session)
     {
         Member member = (Member)session.getAttribute("principal");
-//        groupService.joinGroup(group_id, member);
+        groupService.joinGroup(group_id, member);
         return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
     }
 }

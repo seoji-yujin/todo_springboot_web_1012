@@ -17,6 +17,7 @@ public class GroupController {
 
     private final GroupService groupService;
 
+    // 그룹 생성
     @PostMapping("/group/create")
     public ResponseDto<Integer> createGroup(@RequestBody Group group, HttpSession session)
     {
@@ -25,6 +26,7 @@ public class GroupController {
         return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
     }
 
+    // 그룹 삭제
     @DeleteMapping("/group/delete/{id}")
     public ResponseDto<Integer> deleteGroup(@PathVariable Integer id, HttpSession session)
     {
