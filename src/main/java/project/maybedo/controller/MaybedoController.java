@@ -23,7 +23,6 @@ import java.util.List;
 public class MaybedoController {
 
     private final MaybedoService maybedoService;
-    private final MemberService memberService;
 
     //maybedo 리스트 조회
     @RequestMapping("/maybedo")

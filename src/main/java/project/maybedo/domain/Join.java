@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Getter @Setter
 public class Join {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "join_id")
     private Long id;
 
