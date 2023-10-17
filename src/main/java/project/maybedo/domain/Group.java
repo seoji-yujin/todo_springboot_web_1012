@@ -15,11 +15,13 @@ public class Group {
     @GeneratedValue
     @Column(name = "group_id")
     private int id;
+    private int leader;  // 그룹장의 아이디
     private String name;
     private LocalDateTime expire_date;
     private Long limit_member;
     private String description;
     private String photo_url;
+
     @OneToMany(mappedBy = "group")
     private List<GroupTodo> group_todo_list = new ArrayList<>();
 
