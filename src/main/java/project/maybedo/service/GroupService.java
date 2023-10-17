@@ -11,6 +11,9 @@ import project.maybedo.repository.JoinRepository;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -46,6 +49,19 @@ public class GroupService {
         this.groupRepository.save(new_group);
 
         joinGroup(new_group.getId(), member);
+    }
+
+    // 그룹의 멤버 찾아오기
+    public List<Member> findMemberInGroup(int group_id)
+    {
+        List<Join> joinList = joinRepository.findByGroup_Id(group_id);
+
+        // joinList에서 member 뽑아서 반환
+        List<Member> membersInGroup = joinList.stream()
+                .map(Join::getMember)
+                .collect(Collectors.toList());
+
+        return membersInGroup;
     }
 
     // 그룹 삭제

@@ -13,7 +13,7 @@ public class Join {
     @Id
     @GeneratedValue
     @Column(name = "join_id")
-    private Long id;
+    private int id;
     private LocalDate date;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
