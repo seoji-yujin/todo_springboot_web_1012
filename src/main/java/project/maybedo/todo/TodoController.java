@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import project.maybedo.dto.ResponseDto;
 import project.maybedo.member.Member;
+import project.maybedo.todo.dto.TodoCreateDTO;
 
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
@@ -45,12 +46,12 @@ public class TodoController {
         return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
     }
 
-    // 멤버 찾아와서 투두 작성
+    // 투두 생성
     @PostMapping("/todo/create")
-    public ResponseDto<Integer> createTodo(@RequestBody Todo todo, HttpSession session) {
+    public ResponseDto<Integer> createTodo(@RequestBody TodoCreateDTO todoCreateDTO, HttpSession session) {
         // 세션에서 사용자 정보를 가져옴
         Member member = (Member)session.getAttribute("principal");
-        todoService.create(member, todo.getContent(), todo.getDate());
+        todoService.create(member, todoCreateDTO.getContent(), todoCreateDTO.getDate());
         return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
     }
 
