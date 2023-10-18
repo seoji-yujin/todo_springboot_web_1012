@@ -15,15 +15,10 @@ import java.util.List;
 @Getter @Setter
 public class Group {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     @Column(name = "group_id")
-<<<<<<< HEAD:src/main/java/project/maybedo/domain/Group.java
-    private Integer id;
-    private int leader;  // 그룹장의 아이디
-=======
     private int id;
     private Integer leader;  // 그룹장의 아이디
->>>>>>> upstream/master:src/main/java/project/maybedo/group/domain/Group.java
     private String name;
     private LocalDate expire_date;
     private Integer limit_member;
@@ -42,7 +37,7 @@ public class Group {
     @OneToMany(mappedBy = "group")
     private List<Select> select_list = new ArrayList<>();
 
-    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "group")
     private List<Join> join_list = new ArrayList<>();
 
     @OneToMany(mappedBy = "group")
