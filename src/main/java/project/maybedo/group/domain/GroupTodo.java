@@ -1,9 +1,11 @@
-package project.maybedo.domain;
+package project.maybedo.group.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import project.maybedo.todo.Status;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -12,9 +14,9 @@ public class GroupTodo {
     @Id
     @GeneratedValue
     @Column(name = "group_todo_id")
-    private Long id;
+    private int id;
     private String content;
-    private LocalDateTime date;
+    private LocalDate date;
     @Enumerated(EnumType.STRING)
     private Status status;
     @ManyToOne(fetch = FetchType.LAZY)

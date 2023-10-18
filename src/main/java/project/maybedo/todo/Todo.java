@@ -1,12 +1,13 @@
-package project.maybedo.domain;
+package project.maybedo.todo;
 
 import lombok.Getter;
 import lombok.Setter;
+import project.maybedo.member.Member;
+import project.maybedo.domain.Select;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -15,7 +16,7 @@ public class Todo {
     @Id
     @GeneratedValue
     @Column(name = "todo_id")
-    private Integer id;
+    private int id;
     private String content;
     private LocalDate date;
     @Enumerated(EnumType.STRING)
@@ -26,10 +27,4 @@ public class Todo {
 
     @OneToMany(mappedBy = "todo")
     private List<Select> todo_group_list = new ArrayList<>();
-
-//    public TodoDto toDto() {
-//        return TodoDto.builder()
-//                .status(this.status)
-//                .data(this.data).build();
-//    }
 }

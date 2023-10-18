@@ -1,11 +1,11 @@
-package project.maybedo.domain;
+package project.maybedo.maybedo;
 
 import lombok.Getter;
 import lombok.Setter;
+import project.maybedo.member.Member;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -14,9 +14,9 @@ public class Maybedo {
     @Id
     @GeneratedValue
     @Column(name = "maybedo_id")
-    private Long id;
+    private int id;
     private String content;
-    private Date date;
+    private LocalDate date;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;

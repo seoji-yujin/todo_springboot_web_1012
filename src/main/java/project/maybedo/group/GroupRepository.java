@@ -1,7 +1,7 @@
-package project.maybedo.repository;
+package project.maybedo.group;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import project.maybedo.domain.Group;
+import project.maybedo.group.domain.Group;
 
 import java.util.Optional;
 

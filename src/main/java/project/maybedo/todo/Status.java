@@ -1,4 +1,4 @@
-package project.maybedo.domain;
+package project.maybedo.todo;
 
 public enum Status {
     DONE, YET

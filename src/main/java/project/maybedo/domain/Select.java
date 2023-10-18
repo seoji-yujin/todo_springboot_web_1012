@@ -2,6 +2,8 @@ package project.maybedo.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import project.maybedo.group.domain.Group;
+import project.maybedo.todo.Todo;
 
 import javax.persistence.*;
 
@@ -11,7 +13,7 @@ public class Select {
     @Id
     @GeneratedValue
     @Column(name = "todo_group_id")
-    private Long id;
+    private int id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="todo_id")

@@ -1,7 +1,6 @@
-package project.maybedo.repository;
+package project.maybedo.maybedo;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import project.maybedo.domain.Maybedo;
 
 public interface MaybedoRepository extends JpaRepository<Maybedo, Integer> {
 }

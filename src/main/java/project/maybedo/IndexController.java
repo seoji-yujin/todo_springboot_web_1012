@@ -1,4 +1,4 @@
-package project.maybedo.controller;
+package project.maybedo;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
