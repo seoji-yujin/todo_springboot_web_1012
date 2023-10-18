@@ -1,4 +1,4 @@
-package project.maybedo.group;
+package project.maybedo.group.domain;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -12,7 +12,7 @@ public class GroupTag {
     @Id
     @GeneratedValue
     @Column(name = "group_tag_id")
-    private Long id;
+    private int id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="group_id")

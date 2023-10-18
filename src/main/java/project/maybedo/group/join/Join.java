@@ -1,8 +1,8 @@
-package project.maybedo.join;
+package project.maybedo.group.join;
 
 import lombok.Getter;
 import lombok.Setter;
-import project.maybedo.group.Group;
+import project.maybedo.group.domain.Group;
 import project.maybedo.member.Member;
 
 import javax.persistence.*;

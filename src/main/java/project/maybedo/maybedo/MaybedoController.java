@@ -16,10 +16,9 @@ import java.util.List;
 public class MaybedoController {
 
     private final MaybedoService maybedoService;
-    private final MemberService memberService;
 
     //maybedo 리스트 조회
-    @RequestMapping("/maybedo")
+    @GetMapping("/maybedo")
     public ResponseDto<Integer> list(Model model) {
         List<Maybedo> maybedoList = maybedoService.getList();
         model.addAttribute("maybedoList", maybedoList);
@@ -36,14 +35,14 @@ public class MaybedoController {
 
     //maybedo 삭제
     @DeleteMapping("/maybedo/delete/{id}")
-    public ResponseDto<Integer> deleteMaybedo(@PathVariable Integer id) {
+    public ResponseDto<Integer> deleteMaybedo(@PathVariable int id) {
         maybedoService.delete(id);
         return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
     }
 
     //maybedo 수정
     @PutMapping("/maybedo/update/{id}")
-    public ResponseDto<Integer> updateMaybedo(@RequestParam String content, @PathVariable Integer id) {
+    public ResponseDto<Integer> updateMaybedo(@RequestParam String content, @PathVariable int id) {
         maybedoService.update(id, content);
         return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
     }

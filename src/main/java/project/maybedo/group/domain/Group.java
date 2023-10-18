@@ -1,11 +1,12 @@
-package project.maybedo.group;
+package project.maybedo.group.domain;
 
 import lombok.Getter;
 import lombok.Setter;
 import project.maybedo.domain.*;
-import project.maybedo.join.Join;
+import project.maybedo.group.join.Join;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,10 +18,10 @@ public class Group {
     @GeneratedValue
     @Column(name = "group_id")
     private int id;
-    private int leader;  // 그룹장의 아이디
+    private Integer leader;  // 그룹장의 아이디
     private String name;
-    private LocalDateTime expire_date;
-    private Long limit_member;
+    private LocalDate expire_date;
+    private Integer limit_member;
     private String description;
     private String photo_url;
 

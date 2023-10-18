@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import project.maybedo.dto.ResponseDto;
+import project.maybedo.group.domain.Group;
 import project.maybedo.member.Member;
 
 import javax.servlet.http.HttpSession;

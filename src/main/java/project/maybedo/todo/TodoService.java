@@ -3,7 +3,6 @@ package project.maybedo.todo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import project.maybedo.member.Member;
-import project.maybedo.domain.Status;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -29,7 +28,7 @@ public class TodoService
     }
 
     // 완료 표시
-    public void done(Integer id) {
+    public void done(int id) {
         Todo todo = todoRepository.findById(id)
                 .orElseThrow(()->new IllegalArgumentException("존재하지 않는 id : " + id));
         todo.setStatus(Status.DONE);
@@ -38,14 +37,14 @@ public class TodoService
     }
 
     // 투두 삭제
-    public void delete(Integer id) {
+    public void delete(int id) {
         Todo todo = todoRepository.findById(id)
                 .orElseThrow(()->new IllegalArgumentException("존재하지 않는 id : " + id));
         this.todoRepository.delete(todo);
     }
 
     // 투두 수정
-    public void update(Integer id, String content) {
+    public void update(int id, String content) {
         Todo todo = todoRepository.findById(id)
                 .orElseThrow(()->new IllegalArgumentException("존재하지 않는 id : " + id));
         todo.setContent(content);

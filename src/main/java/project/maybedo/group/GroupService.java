@@ -2,8 +2,9 @@ package project.maybedo.group;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import project.maybedo.join.Join;
-import project.maybedo.join.JoinRepository;
+import project.maybedo.group.domain.Group;
+import project.maybedo.group.join.Join;
+import project.maybedo.group.join.JoinRepository;
 import project.maybedo.member.Member;
 
 import java.time.LocalDate;
@@ -38,7 +39,7 @@ public class GroupService {
         Group new_group = new Group();
         new_group.setLeader(member.getId());  // 그룹장 아이디
         new_group.setName(group.getName());  // 그룹 이름
-        new_group.setExpire_date(LocalDateTime.now());
+        new_group.setExpire_date(LocalDate.now());
         new_group.setDescription(group.getDescription());  // 그룹 소개
         new_group.setLimit_member(group.getLimit_member());  // 그룹 최대 인원
         new_group.setPhoto_url(group.getPhoto_url());  // 그룹 대표 사진

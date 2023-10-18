@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import project.maybedo.member.Member;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -19,17 +20,17 @@ public class MaybedoService {
         Maybedo maybedo = new Maybedo();
         maybedo.setMember(member);
         maybedo.setContent(content);
-        maybedo.setDate(new Date());
+        maybedo.setDate(LocalDate.now());
         this.maybedoRepository.save(maybedo);
     }
 
-    public void delete(Integer id) {
+    public void delete(int id) {
         Maybedo maybedo = maybedoRepository.findById(id)
                 .orElseThrow(()->new IllegalArgumentException("존재하지 않는 id : " + id));
         this.maybedoRepository.delete(maybedo);
     }
 
-    public void update(Integer id, String content) {
+    public void update(int id, String content) {
         Maybedo maybedo = maybedoRepository.findById(id)
                 .orElseThrow(()->new IllegalArgumentException("존재하지 않는 id : " + id));
         maybedo.setContent(content);

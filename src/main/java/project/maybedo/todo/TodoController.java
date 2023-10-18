@@ -56,21 +56,21 @@ public class TodoController {
 
     // 투두 완료 체크
     @PutMapping("/todo/done/{id}")
-    public ResponseDto<Integer> todoDoneCheck(@PathVariable Integer id) {
+    public ResponseDto<Integer> todoDoneCheck(@PathVariable int id) {
         todoService.done(id);
         return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
     }
 
     // 투두 삭제
     @DeleteMapping("/todo/delete/{id}")
-    public ResponseDto<Integer> todoDelete(@PathVariable Integer id) {
+    public ResponseDto<Integer> todoDelete(@PathVariable int id) {
         todoService.delete(id);
         return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
     }
 
     // 투두 수정
     @PutMapping("/todo/update/{id}")
-    public ResponseDto<Integer> todoUpdate(@PathVariable Integer id, @RequestParam String content) {
+    public ResponseDto<Integer> todoUpdate(@PathVariable int id, @RequestParam String content) {
         todoService.update(id, content);
         return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
     }
