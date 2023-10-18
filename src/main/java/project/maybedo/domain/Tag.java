@@ -2,6 +2,7 @@ package project.maybedo.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import project.maybedo.group.GroupTag;
 
 import javax.persistence.*;
 import java.util.ArrayList;

@@ -1,21 +1,14 @@
-package project.maybedo.controller;
+package project.maybedo.maybedo;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import project.maybedo.controller.dto.ResponseDto;
-import project.maybedo.domain.Maybedo;
-import project.maybedo.domain.Member;
-import project.maybedo.repository.MaybedoRepository;
-import project.maybedo.service.MaybedoService;
-import project.maybedo.service.MemberService;
+import project.maybedo.dto.ResponseDto;
+import project.maybedo.member.Member;
+import project.maybedo.member.MemberService;
 
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 import java.util.List;
 
 @RequiredArgsConstructor

@@ -1,16 +1,14 @@
-package project.maybedo.controller;
+package project.maybedo.join;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import project.maybedo.controller.dto.ResponseDto;
-import project.maybedo.domain.Member;
-import project.maybedo.service.GroupService;
+import project.maybedo.dto.ResponseDto;
+import project.maybedo.member.Member;
+import project.maybedo.group.GroupService;
 
-import javax.naming.InsufficientResourcesException;
 import javax.servlet.http.HttpSession;
 
 @RestController

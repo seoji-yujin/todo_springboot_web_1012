@@ -2,6 +2,8 @@ package project.maybedo.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import project.maybedo.group.Group;
+import project.maybedo.member.Member;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
