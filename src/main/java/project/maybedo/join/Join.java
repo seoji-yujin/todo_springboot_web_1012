@@ -1,11 +1,12 @@
-package project.maybedo.domain;
+package project.maybedo.join;
 
 import lombok.Getter;
 import lombok.Setter;
+import project.maybedo.group.Group;
+import project.maybedo.member.Member;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Entity
 @Getter @Setter

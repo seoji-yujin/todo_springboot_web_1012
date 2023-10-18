@@ -1,19 +1,14 @@
-package project.maybedo.controller;
+package project.maybedo.todo;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import project.maybedo.controller.dto.ResponseDto;
-import project.maybedo.domain.Member;
-import project.maybedo.domain.Todo;
-import project.maybedo.service.TodoService;
+import project.maybedo.dto.ResponseDto;
+import project.maybedo.member.Member;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 @RestController

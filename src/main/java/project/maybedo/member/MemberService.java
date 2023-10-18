@@ -1,10 +1,8 @@
-package project.maybedo.service;
+package project.maybedo.member;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import project.maybedo.domain.Member;
-import project.maybedo.repository.MemberRepository;
 
 import java.util.List;
 

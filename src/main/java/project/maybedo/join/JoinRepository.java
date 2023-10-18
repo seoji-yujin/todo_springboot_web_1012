@@ -1,8 +1,7 @@
-package project.maybedo.repository;
+package project.maybedo.join;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import project.maybedo.domain.Join;
-import project.maybedo.domain.Maybedo;
+import project.maybedo.join.Join;
 
 import java.util.List;
 

@@ -1,17 +1,13 @@
-package project.maybedo.service;
+package project.maybedo.group;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import project.maybedo.domain.Group;
-import project.maybedo.domain.Join;
-import project.maybedo.domain.Member;
-import project.maybedo.domain.Todo;
-import project.maybedo.repository.GroupRepository;
-import project.maybedo.repository.JoinRepository;
+import project.maybedo.join.Join;
+import project.maybedo.join.JoinRepository;
+import project.maybedo.member.Member;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
