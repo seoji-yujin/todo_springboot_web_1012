@@ -6,6 +6,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import project.maybedo.dto.ResponseDto;
 import project.maybedo.member.Member;
+import project.maybedo.todo.todoDTO.TodoCreateDTO;
+import project.maybedo.todo.todoDTO.TodoUpdateDTO;
 
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
@@ -36,22 +38,17 @@ public class TodoController {
         LocalDate today = LocalDate.now();
         List<Todo> todos = todoService.getTodosByMemberAndDate(member, today);
         model.addAttribute("todos", todos);
-
-        // 투두 목록을 로그에 출력
-        for (Todo todo : todos) {
-            System.out.println("Todo: " + todo.getContent());
-        }
-
         return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
     }
 
-    // 멤버 찾아와서 투두 작성
+    // 투두 생성
     @PostMapping("/todo/create")
-    public ResponseDto<Integer> createTodo(@RequestBody Todo todo, HttpSession session) {
+    public ResponseDto<Todo> createTodo(@RequestBody TodoCreateDTO todoCreateDTO, HttpSession session) {
         // 세션에서 사용자 정보를 가져옴
         Member member = (Member)session.getAttribute("principal");
-        todoService.create(member, todo.getContent(), todo.getDate());
-        return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
+        Todo todo = todoService.create(member, todoCreateDTO.getContent(), todoCreateDTO.getDate());
+        System.out.println("Todo: "+todo.getContent());
+        return new ResponseDto<Todo>(HttpStatus.OK.value(), todo);
     }
 
     // 투두 완료 체크
@@ -70,10 +67,9 @@ public class TodoController {
 
     // 투두 수정
     @PutMapping("/todo/update/{id}")
-    public ResponseDto<Integer> todoUpdate(@PathVariable int id, @RequestParam String content) {
-        todoService.update(id, content);
+    public ResponseDto<Integer> todoUpdate(@PathVariable int id, @RequestBody TodoUpdateDTO todoUpdateDTO) {
+        todoService.update(id, todoUpdateDTO.getContent());
         return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
     }
-
 
 }
