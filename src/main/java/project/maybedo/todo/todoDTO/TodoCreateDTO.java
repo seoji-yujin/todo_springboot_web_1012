@@ -1,4 +1,4 @@
-package project.maybedo.todo.dto;
+package project.maybedo.todo.todoDTO;
 
 import lombok.Data;
 

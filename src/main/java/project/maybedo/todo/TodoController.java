@@ -6,8 +6,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import project.maybedo.dto.ResponseDto;
 import project.maybedo.member.Member;
-import project.maybedo.todo.dto.TodoCreateDTO;
-import project.maybedo.todo.dto.TodoUpdateDTO;
+import project.maybedo.todo.todoDTO.TodoCreateDTO;
+import project.maybedo.todo.todoDTO.TodoUpdateDTO;
 
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
