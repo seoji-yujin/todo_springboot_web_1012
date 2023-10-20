@@ -48,11 +48,12 @@ public class TodoController {
 
     // 투두 생성
     @PostMapping("/todo/create")
-    public ResponseDto<Integer> createTodo(@RequestBody TodoCreateDTO todoCreateDTO, HttpSession session) {
+    public ResponseDto<?> createTodo(@RequestBody TodoCreateDTO todoCreateDTO, HttpSession session) {
         // 세션에서 사용자 정보를 가져옴
         Member member = (Member)session.getAttribute("principal");
-        todoService.create(member, todoCreateDTO.getContent(), todoCreateDTO.getDate());
-        return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
+//        Todo todo = todoService.create(member, todoCreateDTO.getContent(), todoCreateDTO.getDate());
+        Todo todo = todoService.create(member, todoCreateDTO.getContent());
+        return new ResponseDto<>(HttpStatus.OK.value(), todo);
     }
 
     // 투두 완료 체크
