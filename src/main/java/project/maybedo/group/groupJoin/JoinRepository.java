@@ -1,4 +1,4 @@
-package project.maybedo.group.join;
+package project.maybedo.group.groupJoin;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
