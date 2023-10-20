@@ -3,12 +3,11 @@ package project.maybedo.group;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import project.maybedo.group.domain.Group;
-import project.maybedo.group.join.Join;
-import project.maybedo.group.join.JoinRepository;
+import project.maybedo.group.groupJoin.Join;
+import project.maybedo.group.groupJoin.JoinRepository;
 import project.maybedo.member.Member;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 

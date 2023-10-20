@@ -1,4 +1,4 @@
-package project.maybedo.group.join;
+package project.maybedo.group.groupJoin;
 
 import lombok.Getter;
 import lombok.Setter;

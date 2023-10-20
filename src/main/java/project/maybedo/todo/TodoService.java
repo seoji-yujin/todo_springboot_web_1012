@@ -1,6 +1,7 @@
 package project.maybedo.todo;
 
 import lombok.RequiredArgsConstructor;
+import net.bytebuddy.asm.Advice;
 import org.springframework.stereotype.Service;
 import project.maybedo.member.Member;
 
@@ -14,17 +15,19 @@ public class TodoService
     private final TodoRepository todoRepository;
 
     // 투두 작성
-    public void create(Member member, String content, LocalDate today) {
+//    public Todo create(Member member, String content, LocalDate today) {
+    public Todo create(Member member, String content, LocalDate date) {
         Todo todo = new Todo();
         todo.setMember(member);
         todo.setContent(content);
         todo.setStatus(Status.YET);
-        if (today == null)
+        if (date == null)
             todo.setDate(LocalDate.now());
         else
-            todo.setDate(today);  // 날짜 정보가 들어온다면 해당 날짜에 투두 저장
+            todo.setDate(date);  // 날짜 정보가 들어온다면 해당 날짜에 투두 저장
 
         this.todoRepository.save(todo);
+        return (todo);
     }
 
     // 완료 표시

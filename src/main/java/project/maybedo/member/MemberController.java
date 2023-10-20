@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import project.maybedo.dto.ResponseDto;
+import project.maybedo.member.memberDTO.memberLoginDTO;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -26,9 +27,9 @@ public class MemberController {
 
     // 로그인
     @PostMapping("/member/login")
-    public ResponseDto<Integer> login(@RequestBody Member member, HttpSession session) {
+    public ResponseDto<Integer> login(@RequestBody memberLoginDTO memberLoginDTO, HttpSession session) {
         System.out.println("login 호출됨");
-        Member principal = memberService.login(member);
+        Member principal = memberService.login(memberLoginDTO.getUsername(), memberLoginDTO.getPassword());
 
         if (principal != null) {
             session.setAttribute("principal", principal);

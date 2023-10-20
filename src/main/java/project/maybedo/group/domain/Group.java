@@ -3,11 +3,10 @@ package project.maybedo.group.domain;
 import lombok.Getter;
 import lombok.Setter;
 import project.maybedo.domain.*;
-import project.maybedo.group.join.Join;
+import project.maybedo.group.groupJoin.Join;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
