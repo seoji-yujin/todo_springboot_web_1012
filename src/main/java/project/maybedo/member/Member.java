@@ -30,6 +30,7 @@ public class Member {
     private List<Todo> todo_list = new ArrayList<>();
 
     @OneToMany(mappedBy = "member")
+    @JsonManagedReference
     private List<Maybedo> maybedo_list = new ArrayList<>();
 
     @OneToMany(mappedBy = "member")

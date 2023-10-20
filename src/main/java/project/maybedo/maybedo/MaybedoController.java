@@ -9,6 +9,7 @@ import project.maybedo.member.Member;
 import project.maybedo.member.MemberService;
 
 import javax.servlet.http.HttpSession;
+import java.time.LocalDate;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -19,32 +20,37 @@ public class MaybedoController {
 
     //maybedo 리스트 조회
     @GetMapping("/maybedo")
-    public ResponseDto<Integer> list(Model model) {
-        List<Maybedo> maybedoList = maybedoService.getList();
-        model.addAttribute("maybedoList", maybedoList);
-        return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
+    public ResponseDto<List> list() {
+        return new ResponseDto<List>(HttpStatus.OK.value(), maybedoService.getList());
+    }
+
+    //오늘의 maybedo 리스트 조회
+    @GetMapping("/today/maybedo")
+    public ResponseDto<List> todayMaybedoList() {
+        LocalDate today = LocalDate.now();
+        List<Maybedo> todayMabyedoList = maybedoService.getTodayList(today);
+        return new ResponseDto<List>(HttpStatus.OK.value(), todayMabyedoList);
     }
 
     //maybedo 작성
     @PostMapping("/maybedo/create")
-    public ResponseDto<Integer> createMaybedo(@RequestBody String content, HttpSession httpSession) {
+    public ResponseDto<Maybedo> createMaybedo(@RequestBody MaybedoCreateDTO maybedoCreateDTO, HttpSession httpSession) {
         Member member = (Member)httpSession.getAttribute("principal");
-        maybedoService.create(member, content);
-        return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
+        Maybedo maybedo = maybedoService.create(member, maybedoCreateDTO);
+        return new ResponseDto<Maybedo>(HttpStatus.OK.value(), maybedo);
+    }
+
+    //maybedo 수정
+    @PutMapping("/maybedo/update/{id}")
+    public ResponseDto<Maybedo> updateMaybedo(@PathVariable int id, @RequestBody MaybedoCreateDTO maybedoCreateDTO) {
+        Maybedo maybedo = maybedoService.update(id, maybedoCreateDTO);
+        return new ResponseDto<Maybedo>(HttpStatus.OK.value(), maybedo);
     }
 
     //maybedo 삭제
     @DeleteMapping("/maybedo/delete/{id}")
     public ResponseDto<Integer> deleteMaybedo(@PathVariable int id) {
         maybedoService.delete(id);
-        return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
+        return new ResponseDto<Integer>(HttpStatus.OK.value(), id);
     }
-
-    //maybedo 수정
-    @PutMapping("/maybedo/update/{id}")
-    public ResponseDto<Integer> updateMaybedo(@RequestParam String content, @PathVariable int id) {
-        maybedoService.update(id, content);
-        return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
-    }
-
 }
