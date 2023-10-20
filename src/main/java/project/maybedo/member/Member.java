@@ -1,5 +1,6 @@
 package project.maybedo.member;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 import project.maybedo.maybedo.Maybedo;
@@ -24,6 +25,7 @@ public class Member {
     private String password;
     private String message;
     private String photo_url;
+    @JsonManagedReference
     @OneToMany(mappedBy = "member")
     private List<Todo> todo_list = new ArrayList<>();
 
