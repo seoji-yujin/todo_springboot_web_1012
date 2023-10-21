@@ -29,16 +29,15 @@ public class TodoController {
 
     // 오늘의 투두 리스트 가져오기
     @GetMapping("/today/todo")
-    public ResponseDto<Integer> getTodosForToday(Model model, HttpSession session) {
+    public ResponseDto<List<Todo>> getTodosForToday(Model model, HttpSession session) {
 
         Member member = (Member) session.getAttribute("principal");
-        /**
-         * 사용자 없을 경우 예외 코드 추가하기
-         */
+
+        // 사용자 없을 경우 에러 코드 반환
         LocalDate today = LocalDate.now();
         List<Todo> todos = todoService.getTodosByMemberAndDate(member, today);
         model.addAttribute("todos", todos);
-        return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
+        return new ResponseDto<List<Todo>>(HttpStatus.OK.value(), todos);
     }
 
     // 투두 생성

@@ -15,7 +15,6 @@ public class TodoService
     private final TodoRepository todoRepository;
 
     // 투두 작성
-//    public Todo create(Member member, String content, LocalDate today) {
     public Todo create(Member member, String content, LocalDate date) {
         Todo todo = new Todo();
         todo.setMember(member);
