@@ -41,6 +41,12 @@ public class MemberController {
     }
 
     // 회원 프로필 수정
+    @PutMapping("/member/update")
+    public ResponseDto<Integer> update(@RequestBody MemberUpdateDTO memberUpdateDTO, HttpSession session) {
+        Member member = (Member) session.getAttribute("principal");
+
+        return new ResponseDto<Integer> (HttpStatus.OK.value(), 1);
+    }
 
     // 멤버 1명 조회
     @GetMapping("/member")
