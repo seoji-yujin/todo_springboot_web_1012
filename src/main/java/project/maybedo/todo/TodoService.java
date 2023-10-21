@@ -54,7 +54,7 @@ public class TodoService
     }
 
     // 날짜와 멤버로 투두 조회
-    public List<Todo> getTodosByMemberAndDate(Member member, LocalDate today){
-        return todoRepository.findByMemberAndDate(member, today);
+    public List<Todo> getTodosByMemberAndDate(Member member, LocalDate date){
+        return todoRepository.findByMemberAndDate(member, date);
     }
 }

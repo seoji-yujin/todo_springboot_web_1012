@@ -25,8 +25,10 @@ public class TodoController {
     public ResponseDto<List<Todo>> getTodosForDay(@RequestBody TodoGetDTO todoGetDTO, HttpSession session) {
         Member member = (Member) session.getAttribute("principal");
         // 사용자가 없을 경우 에러 코드 반환
-        LocalDate today = todoGetDTO.getDate();
-        List<Todo> todos = todoService.getTodosByMemberAndDate(member, today);
+        LocalDate date = todoGetDTO.getDate();
+        if (date == null)
+            date = LocalDate.now();  // 따로 날짜를 입력받지 않았다면 오늘 날짜
+        List<Todo> todos = todoService.getTodosByMemberAndDate(member, date);
         return new ResponseDto<List<Todo>>(HttpStatus.OK.value(), todos);
     }
 
