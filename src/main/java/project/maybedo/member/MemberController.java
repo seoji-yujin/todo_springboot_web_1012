@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import project.maybedo.dto.ResponseDto;
 import project.maybedo.member.memberDTO.MemberJoinDTO;
 import project.maybedo.member.memberDTO.MemberLoginDTO;
+import project.maybedo.member.memberDTO.MemberUpdateDTO;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -38,6 +39,8 @@ public class MemberController {
         }
         return new ResponseDto<Integer> (HttpStatus.OK.value(), 1);
     }
+
+    // 회원 프로필 수정
 
     // 멤버 1명 조회
     @GetMapping("/member")
