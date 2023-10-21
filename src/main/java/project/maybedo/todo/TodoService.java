@@ -34,7 +34,6 @@ public class TodoService
         Todo todo = todoRepository.findById(id)
                 .orElseThrow(()->new IllegalArgumentException("존재하지 않는 id : " + id));
         todo.setStatus(Status.DONE);
-
         this.todoRepository.save(todo);
     }
 
@@ -46,12 +45,12 @@ public class TodoService
     }
 
     // 투두 수정
-    public void update(int id, String content) {
+    public Todo update(int id, String content) {
         Todo todo = todoRepository.findById(id)
                 .orElseThrow(()->new IllegalArgumentException("존재하지 않는 id : " + id));
         todo.setContent(content);
-
         this.todoRepository.save(todo);
+        return (todo);
     }
 
     // 투두 리스트 조회

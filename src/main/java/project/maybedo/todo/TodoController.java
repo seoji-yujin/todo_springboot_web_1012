@@ -66,9 +66,9 @@ public class TodoController {
 
     // 투두 수정
     @PutMapping("/todo/update/{id}")
-    public ResponseDto<Integer> todoUpdate(@PathVariable int id, @RequestBody TodoUpdateDTO todoUpdateDTO) {
-        todoService.update(id, todoUpdateDTO.getContent());
-        return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
+    public ResponseDto<Todo> todoUpdate(@PathVariable int id, @RequestBody TodoUpdateDTO todoUpdateDTO) {
+        Todo new_todo = todoService.update(id, todoUpdateDTO.getContent());
+        return new ResponseDto<Todo>(HttpStatus.OK.value(), new_todo);
     }
 
 }
