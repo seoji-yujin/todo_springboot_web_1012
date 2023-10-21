@@ -22,6 +22,7 @@ public class MemberService {
         {
             Member new_member = new Member();
 
+            new_member.setName(memberJoinDTO.getName());
             new_member.setEmail(memberJoinDTO.getEmail());
             new_member.setUsername(memberJoinDTO.getUsername());
             new_member.setPassword(memberJoinDTO.getPassword());
