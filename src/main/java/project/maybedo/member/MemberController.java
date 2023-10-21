@@ -42,10 +42,10 @@ public class MemberController {
 
     // 회원 프로필 수정
     @PutMapping("/member/update")
-    public ResponseDto<Integer> update(@RequestBody MemberUpdateDTO memberUpdateDTO, HttpSession session) {
+    public ResponseDto<Member> update(@RequestBody MemberUpdateDTO memberUpdateDTO, HttpSession session) {
         Member member = (Member) session.getAttribute("principal");
-        memberService.update(memberUpdateDTO, member);
-        return new ResponseDto<Integer> (HttpStatus.OK.value(), 1);
+        Member update_member = memberService.update(memberUpdateDTO, member);
+        return new ResponseDto<Member> (HttpStatus.OK.value(), update_member);
     }
 
     // 멤버 1명 조회
