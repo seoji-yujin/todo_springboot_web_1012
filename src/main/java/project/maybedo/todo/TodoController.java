@@ -20,27 +20,6 @@ public class TodoController {
 
     private final TodoService todoService;
 
-//    // 투두 메인 화면 (투두 리스트 조회)
-//    @RequestMapping("/todo")
-//    public ResponseDto<Integer> list(Model model) {
-//        List<Todo> todoList = todoService.getTodoList();
-//        model.addAttribute("todoList", todoList);
-//        return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
-//    }
-//
-//    // 오늘의 투두 리스트 가져오기
-//    @GetMapping("/today/todo")
-//    public ResponseDto<List<Todo>> getTodosForToday(Model model, HttpSession session) {
-//
-//        Member member = (Member) session.getAttribute("principal");
-//
-//        // 사용자 없을 경우 에러 코드 반환
-//        LocalDate today = LocalDate.now();
-//        List<Todo> todos = todoService.getTodosByMemberAndDate(member, today);
-//        model.addAttribute("todos", todos);
-//        return new ResponseDto<List<Todo>>(HttpStatus.OK.value(), todos);
-//    }
-
     // 해당 날짜 투두 리스트 가져오기
     @GetMapping("/todo/get")
     public ResponseDto<List<Todo>> getTodosForDay(@RequestBody TodoGetDTO todoGetDTO, HttpSession session) {

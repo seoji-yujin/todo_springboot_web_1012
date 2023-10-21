@@ -53,11 +53,7 @@ public class TodoService
         return (todo);
     }
 
-    // 투두 리스트 조회
-    public List<Todo> getTodoList() {
-        return this.todoRepository.findAll();
-    }
-
+    // 날짜와 멤버로 투두 조회
     public List<Todo> getTodosByMemberAndDate(Member member, LocalDate today){
         return todoRepository.findByMemberAndDate(member, today);
     }
