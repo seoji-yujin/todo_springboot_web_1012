@@ -44,7 +44,7 @@ public class MemberController {
     @PutMapping("/member/update")
     public ResponseDto<Integer> update(@RequestBody MemberUpdateDTO memberUpdateDTO, HttpSession session) {
         Member member = (Member) session.getAttribute("principal");
-
+        memberService.update(memberUpdateDTO, member);
         return new ResponseDto<Integer> (HttpStatus.OK.value(), 1);
     }
 

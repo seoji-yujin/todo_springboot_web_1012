@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.maybedo.member.memberDTO.MemberJoinDTO;
+import project.maybedo.member.memberDTO.MemberUpdateDTO;
+import project.maybedo.todo.Todo;
 
 import java.util.List;
 
@@ -37,10 +39,28 @@ public class MemberService {
         if (findMember != null)
             throw new IllegalStateException("이미 가입된 회원입니다.");
     }
-    
+
+    // 로그인
     @Transactional(readOnly = true)  // select할 때 트랜잭션 시작, 서비스 종료 시에 트랜잭션 종료(정합성)
     public Member login(String username, String password) {
         return memberRepository.findByUsernameAndPassword(username, password);
+    }
+
+    // 회원 정보 수정
+    public Member update(MemberUpdateDTO memberUpdateDTO, Member member)
+    {
+        Member update_member = memberRepository.findById(member.getId())
+                .orElseThrow(()->new IllegalArgumentException("존재하지 않은 id : " + member.getId()));
+        if (memberUpdateDTO.getName() != null)
+            update_member.setName(memberUpdateDTO.getName());
+        if (memberUpdateDTO.getEmail() != null)
+            update_member.setEmail(memberUpdateDTO.getEmail());
+        if (memberUpdateDTO.getMessage() != null)
+            update_member.setMessage(memberUpdateDTO.getMessage());
+        if (memberUpdateDTO.getPhoto_url() != null)
+            update_member.setPhoto_url(memberUpdateDTO.getPhoto_url());
+        memberRepository.save(update_member);
+        return (update_member);
     }
 
     // 전체 멤버 조회
