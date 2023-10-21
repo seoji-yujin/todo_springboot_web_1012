@@ -3,6 +3,7 @@ package project.maybedo.member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import project.maybedo.member.memberDTO.MemberJoinDTO;
 
 import java.util.List;
 
@@ -13,11 +14,19 @@ public class MemberService {
     private final MemberRepository memberRepository;
 
 
+    // 회원가입(email, username, password)
     @Transactional
-    public int join(Member member) {
-        Member findMember = memberRepository.findByUsername(member.getUsername());
+    public int join(MemberJoinDTO memberJoinDTO) {
+        Member findMember = memberRepository.findByUsername(memberJoinDTO.getUsername());
         if (findMember == null)
-            return memberRepository.save(member).getId();
+        {
+            Member new_member = new Member();
+
+            new_member.setEmail(memberJoinDTO.getEmail());
+            new_member.setUsername(memberJoinDTO.getUsername());
+            new_member.setPassword(memberJoinDTO.getPassword());
+            return memberRepository.save(new_member).getId();
+        }
         return (-1);
     }
 

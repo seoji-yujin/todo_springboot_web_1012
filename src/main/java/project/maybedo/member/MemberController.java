@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import project.maybedo.dto.ResponseDto;
+import project.maybedo.member.memberDTO.MemberJoinDTO;
 import project.maybedo.member.memberDTO.memberLoginDTO;
 
 import javax.servlet.http.HttpSession;
@@ -18,11 +19,12 @@ public class MemberController {
 
     // 회원가입
     @PostMapping("/member/join")
-    public ResponseDto<Integer> save(@RequestBody Member member) {
+    public ResponseDto<Integer> save(@RequestBody MemberJoinDTO memberJoinDTO) {
         System.out.println("join 호출됨");
-        if (memberService.join(member) == -1)
-            return new ResponseDto<Integer>(HttpStatus.OK.value(), -1);
-        return new ResponseDto<Integer> (HttpStatus.OK.value(), 1);
+        int id = memberService.join(memberJoinDTO);
+        if (id == -1)   // 이미 존재하는 회원
+            return new ResponseDto<Integer>(HttpStatus.OK.value(), id);
+        return new ResponseDto<Integer> (HttpStatus.OK.value(), id);
     }
 
     // 로그인
