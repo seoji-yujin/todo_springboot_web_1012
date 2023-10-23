@@ -17,10 +17,6 @@ public class MaybedoService {
         return maybedoRepository.findAll();
     }
 
-    public List<Maybedo> getTodayList(LocalDate today) {
-        return maybedoRepository.findByDate(today);
-    }
-
     public Maybedo create(Member member, MaybedoCreateDTO maybedoCreateDTO){
         Maybedo maybedo = new Maybedo();
         maybedo.setMember(member);
@@ -31,13 +27,13 @@ public class MaybedoService {
 
     public void delete(int id) {
         Maybedo maybedo = maybedoRepository.findById(id)
-                .orElseThrow(()->new IllegalArgumentException("존재하지 않는 id : " + id));
+                .orElseThrow(()->new IllegalArgumentException("존재하지 않는 maybedo : " + id));
         maybedoRepository.delete(maybedo);
     }
 
     public Maybedo update(int id, MaybedoCreateDTO maybedoCreateDTO) {
         Maybedo maybedo = maybedoRepository.findById(id)
-                .orElseThrow(()->new IllegalArgumentException("존재하지 않는 id : " + id));
+                .orElseThrow(()->new IllegalArgumentException("존재하지 않는 maybedo : " + id));
         maybedo.setContent(maybedoCreateDTO.getContent());
         return maybedoRepository.save(maybedo);
     }

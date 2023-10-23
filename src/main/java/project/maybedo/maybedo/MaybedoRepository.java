@@ -6,5 +6,4 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface MaybedoRepository extends JpaRepository<Maybedo, Integer> {
-    List<Maybedo> findByDate(LocalDate today);
 }

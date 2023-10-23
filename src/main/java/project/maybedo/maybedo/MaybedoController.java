@@ -24,14 +24,6 @@ public class MaybedoController {
         return new ResponseDto<List>(HttpStatus.OK.value(), maybedoService.getList());
     }
 
-    //오늘의 maybedo 리스트 조회
-    @GetMapping("/today/maybedo")
-    public ResponseDto<List> todayMaybedoList() {
-        LocalDate today = LocalDate.now();
-        List<Maybedo> todayMabyedoList = maybedoService.getTodayList(today);
-        return new ResponseDto<List>(HttpStatus.OK.value(), todayMabyedoList);
-    }
-
     //maybedo 작성
     @PostMapping("/maybedo/create")
     public ResponseDto<Maybedo> createMaybedo(@RequestBody MaybedoCreateDTO maybedoCreateDTO, HttpSession httpSession) {
