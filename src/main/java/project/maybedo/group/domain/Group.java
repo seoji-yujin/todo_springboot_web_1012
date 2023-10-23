@@ -1,5 +1,6 @@
 package project.maybedo.group.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 import project.maybedo.domain.*;
@@ -37,6 +38,7 @@ public class Group {
     private List<Select> select_list = new ArrayList<>();
 
     @OneToMany(mappedBy = "group")
+    @JsonManagedReference
     private List<Join> join_list = new ArrayList<>();
 
     @OneToMany(mappedBy = "group")
