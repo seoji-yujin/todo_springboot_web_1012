@@ -50,17 +50,17 @@ public class MemberController {
 
     // 멤버 1명 조회
     @GetMapping("/member")
-    public Member viewMember(@RequestParam int id) {
+    public ResponseDto<Member> viewMember(@RequestParam int id) {
         Member member = memberService.getMember(id);
-        return (member);
+        return new ResponseDto<Member> (HttpStatus.OK.value(), member);
     }
 
     // 멤버 리스트로 조회
     @GetMapping("/members")
-    public List<Member> list(Model model) {
+    public ResponseDto<List<Member>> list(Model model) {
         List<Member> memberList = memberService.getList();
         model.addAttribute("memberlist", memberList);
-        return (memberList);
+        return new ResponseDto<List<Member>> (HttpStatus.OK.value(), memberList);
     }
 
 
