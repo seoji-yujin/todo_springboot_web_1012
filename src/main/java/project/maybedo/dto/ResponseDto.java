@@ -1,5 +1,6 @@
 package project.maybedo.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,5 +12,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class ResponseDto<T> {
     int status;
+
+    @JsonIgnore
     T data;
 }

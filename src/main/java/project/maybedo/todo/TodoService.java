@@ -15,7 +15,6 @@ public class TodoService
     private final TodoRepository todoRepository;
 
     // 투두 작성
-//    public Todo create(Member member, String content, LocalDate today) {
     public Todo create(Member member, String content, LocalDate date) {
         Todo todo = new Todo();
         todo.setMember(member);
@@ -35,7 +34,6 @@ public class TodoService
         Todo todo = todoRepository.findById(id)
                 .orElseThrow(()->new IllegalArgumentException("존재하지 않는 id : " + id));
         todo.setStatus(Status.DONE);
-
         this.todoRepository.save(todo);
     }
 
@@ -47,20 +45,16 @@ public class TodoService
     }
 
     // 투두 수정
-    public void update(int id, String content) {
+    public Todo update(int id, String content) {
         Todo todo = todoRepository.findById(id)
                 .orElseThrow(()->new IllegalArgumentException("존재하지 않는 id : " + id));
         todo.setContent(content);
-
         this.todoRepository.save(todo);
+        return (todo);
     }
 
-    // 투두 리스트 조회
-    public List<Todo> getTodoList() {
-        return this.todoRepository.findAll();
-    }
-
-    public List<Todo> getTodosByMemberAndDate(Member member, LocalDate today){
-        return todoRepository.findByMemberAndDate(member, today);
+    // 날짜와 멤버로 투두 조회
+    public List<Todo> getTodosByMemberAndDate(Member member, LocalDate date){
+        return todoRepository.findByMemberAndDate(member, date);
     }
 }

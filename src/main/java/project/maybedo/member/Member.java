@@ -1,5 +1,6 @@
 package project.maybedo.member;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,6 +22,7 @@ public class Member {
     @Column(name = "member_id")
     private int id;
     private String username;
+    private String name;  // 이게 진짜 이름
     private String email;
     private String password;
     private String message;
