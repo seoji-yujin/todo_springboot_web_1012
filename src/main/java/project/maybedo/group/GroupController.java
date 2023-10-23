@@ -16,13 +16,19 @@ public class GroupController {
 
     private final GroupService groupService;
 
+    // 전체 그룹 조회
+    @GetMapping("/groups")
+    public ResponseDto<List> allList() {
+        return new ResponseDto<List>(HttpStatus.OK.value(), groupService.getAll());
+    }
+
     // 그룹 생성
     @PostMapping("/group/create")
-    public ResponseDto<Integer> createGroup(@RequestBody Group group, HttpSession session)
+    public ResponseDto<Group> createGroup(@RequestBody GroupCreateDTO groupCreateDTO, HttpSession session)
     {
         Member member = (Member)session.getAttribute("principal");
-        groupService.create(group, member);
-        return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
+        Group group = groupService.create(groupCreateDTO, member);
+        return new ResponseDto<Group>(HttpStatus.OK.value(), group);
     }
 
     // 그룹 삭제
@@ -31,7 +37,7 @@ public class GroupController {
     {
         Member member = (Member) session.getAttribute("principal");
         groupService.delete(id, member.getId());
-        return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
+        return new ResponseDto<Integer>(HttpStatus.OK.value(), id);
     }
 
     // 그룹의 멤버를 반환하는 컨트롤러
@@ -40,9 +46,8 @@ public class GroupController {
     {
         List<Member> members = groupService.findMemberInGroup(id);
         for (Member m : members) {
-            System.out.println("member: "+m.getUsername());
+            System.out.println("member: "+m);
         }
-
         return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
     }
 
