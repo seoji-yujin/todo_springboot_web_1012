@@ -42,5 +42,6 @@ public class Member {
     private List<Message> message_list = new ArrayList<>();
 
     @OneToMany(mappedBy = "member")
+    @JsonManagedReference
     private List<Join> join_list = new ArrayList<>();
 }
