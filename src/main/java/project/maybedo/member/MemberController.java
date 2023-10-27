@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import project.maybedo.dto.ResponseDto;
+import project.maybedo.group.domain.Group;
 import project.maybedo.member.memberDTO.MemberJoinDTO;
 import project.maybedo.member.memberDTO.MemberLoginDTO;
 import project.maybedo.member.memberDTO.MemberUpdateDTO;
@@ -61,6 +62,22 @@ public class MemberController {
         List<Member> memberList = memberService.getList();
         model.addAttribute("memberlist", memberList);
         return new ResponseDto<List<Member>> (HttpStatus.OK.value(), memberList);
+    }
+
+    // 내가 가입한 그룹 리스트 가져오기
+    @GetMapping("/member/my_group")
+    public ResponseDto<List<Group>> myGroupList(HttpSession session)
+    {
+        Member member = (Member) session.getAttribute("principal");
+        List<Group> myGroups = memberService.getMyGroups(member);
+        for (Group g : myGroups) {
+            System.out.println("group: "+ g.getId());
+        }
+//        return new ResponseDto<List<Group>> (HttpStatus.OK.value(), myGroups);
+        return ResponseDto.<List<Group>>builder()
+                .status(HttpStatus.OK.value())
+                .data(myGroups)
+                .build();
     }
 
 

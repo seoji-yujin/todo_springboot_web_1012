@@ -13,6 +13,5 @@ import lombok.NoArgsConstructor;
 public class ResponseDto<T> {
     int status;
 
-    @JsonIgnore
     T data;
 }
