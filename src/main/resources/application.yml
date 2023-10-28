@@ -1,4 +1,7 @@
 spring:
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
   datasource:
     url: jdbc:h2:tcp://localhost/~/maybedo
     username: sa

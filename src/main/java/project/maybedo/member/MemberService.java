@@ -3,10 +3,16 @@ package project.maybedo.member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import project.maybedo.group.GroupRepository;
+import project.maybedo.group.GroupService;
+import project.maybedo.group.domain.Group;
+import project.maybedo.group.groupJoin.Join;
+import project.maybedo.group.groupJoin.JoinRepository;
 import project.maybedo.member.memberDTO.MemberJoinDTO;
 import project.maybedo.member.memberDTO.MemberUpdateDTO;
 import project.maybedo.todo.Todo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -14,6 +20,7 @@ import java.util.List;
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    private final JoinRepository joinRepository;
 
 
     // 회원가입(email, username, password)
@@ -73,6 +80,19 @@ public class MemberService {
         Member m = memberRepository.findById(id)
                 .orElseThrow(()->new IllegalArgumentException("존재하지 않는 id : " + id));
         return (m);
+    }
+
+    // 멤버가 가입된 그룹 리스트 가져오기
+    public List<Group>  getMyGroups(Member member) {
+        int member_id = member.getId();
+
+        List<Join>  joinList = joinRepository.findByMember_Id(member_id);
+        // joinList에서 group 뽑아서 반환
+        List<Group> myGroups = new ArrayList<>();
+        for (Join join : joinList) {
+            myGroups.add(join.getGroup());
+        }
+        return (myGroups);
     }
 
 }
