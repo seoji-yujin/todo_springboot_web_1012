@@ -1,4 +1,4 @@
-package project.maybedo.domain;
+package project.maybedo.tag;
 
 import lombok.Getter;
 import lombok.Setter;

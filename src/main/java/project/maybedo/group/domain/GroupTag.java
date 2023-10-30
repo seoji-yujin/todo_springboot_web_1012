@@ -2,7 +2,7 @@ package project.maybedo.group.domain;
 
 import lombok.Getter;
 import lombok.Setter;
-import project.maybedo.domain.Tag;
+import project.maybedo.tag.Tag;
 
 import javax.persistence.*;
 
