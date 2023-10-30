@@ -42,5 +42,6 @@ public class Group {
     private List<Join> join_list = new ArrayList<>();
 
     @OneToMany(mappedBy = "group")
+    @JsonManagedReference
     private List<GroupTag> group_tag_list = new ArrayList<>();
 }

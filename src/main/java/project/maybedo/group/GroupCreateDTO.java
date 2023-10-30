@@ -3,6 +3,8 @@ package project.maybedo.group;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 public class GroupCreateDTO {
@@ -12,5 +14,5 @@ public class GroupCreateDTO {
     private String photo_url;
 
     // 해시태그 리스트
-//    private List<int> tagIds;
+    private List<String> tag;
 }

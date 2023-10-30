@@ -1,5 +1,7 @@
 package project.maybedo.group.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 import project.maybedo.tag.Tag;
@@ -16,9 +18,11 @@ public class GroupTag {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="group_id")
+    @JsonBackReference
     private Group group;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="tag_id")
+    @JsonManagedReference
     private Tag tag;
 }
