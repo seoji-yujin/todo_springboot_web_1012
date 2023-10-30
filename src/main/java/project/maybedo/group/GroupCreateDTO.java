@@ -10,4 +10,7 @@ public class GroupCreateDTO {
     private Integer limit_member;
     private String description;
     private String photo_url;
+
+    // 해시태그 리스트
+//    private List<int> tagIds;
 }

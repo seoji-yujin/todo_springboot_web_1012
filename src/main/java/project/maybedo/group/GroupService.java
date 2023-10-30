@@ -3,6 +3,7 @@ package project.maybedo.group;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import project.maybedo.group.domain.Group;
+import project.maybedo.group.domain.GroupTag;
 import project.maybedo.group.groupJoin.Join;
 import project.maybedo.group.groupJoin.JoinRepository;
 import project.maybedo.member.Member;
@@ -48,8 +49,19 @@ public class GroupService {
         new_group.setDescription(groupCreateDTO.getDescription());  // 그룹 소개
         new_group.setLimit_member(groupCreateDTO.getLimit_member());  // 그룹 최대 인원
         new_group.setPhoto_url(groupCreateDTO.getPhoto_url());  // 그룹 대표 사진
-        groupRepository.save(new_group);
 
+        // 해시태그 저장
+//        List<int> tagIds = groupCreateDTO.getTagIds();
+//        for (int tagId : tagIds)
+//        {
+//            Tag tag = tagRepository.findById(tagId)
+//                    .orElseThrow(()->new IllegalArgumentException("존재하지 않는 해시태그 : " + tagIds));
+//            GroupTag groupTag = new GroupTag();
+//            groupTag.setGroup(new_group);
+//            groupTag.setTag(tag);
+//            new_group.getGroupTags().add(groupTag);
+//        }
+        groupRepository.save(new_group);
         joinGroup(new_group.getId(), member); // 그룹을 생성한 그룹장도 그룹 멤버로 가입
 
         return new_group;
