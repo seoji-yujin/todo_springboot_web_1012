@@ -1,5 +1,6 @@
-package project.maybedo.domain;
+package project.maybedo.tag;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 import project.maybedo.group.domain.GroupTag;
@@ -18,5 +19,6 @@ public class Tag {
     private String content;
 
     @OneToMany(mappedBy = "tag")
+    @JsonBackReference
     private List<GroupTag> group_tag_list = new ArrayList<>();
 }
