@@ -3,7 +3,7 @@ package project.maybedo.tag;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
-import project.maybedo.group.domain.GroupTag;
+import project.maybedo.group.groupTag.GroupTag;
 
 import javax.persistence.*;
 import java.util.ArrayList;
