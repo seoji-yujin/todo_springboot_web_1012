@@ -3,9 +3,10 @@ package project.maybedo.group;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import project.maybedo.group.domain.Group;
-import project.maybedo.group.domain.GroupTag;
 import project.maybedo.group.groupJoin.Join;
 import project.maybedo.group.groupJoin.JoinRepository;
+import project.maybedo.group.groupTag.GroupTag;
+import project.maybedo.group.groupTag.GroupTagRepository;
 import project.maybedo.member.Member;
 import project.maybedo.tag.Tag;
 import project.maybedo.tag.TagRepository;
@@ -13,7 +14,6 @@ import project.maybedo.tag.TagRepository;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -21,7 +21,8 @@ public class GroupService {
 
     private final GroupRepository groupRepository;
     private final JoinRepository joinRepository;
-    private final TagRepository tagRepository;
+    private final TagRepository tagRepository;   // 태그 저장하는
+    private final GroupTagRepository groupTagRepository;  // 태그와 그룹 함께 저장하는
 
     // 전체 그룹 조회
     public List<Group> getAll(){
@@ -69,6 +70,7 @@ public class GroupService {
             groupTag.setGroup(new_group);
             groupTag.setTag(tag);
             new_group.getGroup_tag_list().add(groupTag);
+            groupTagRepository.save(groupTag);
         }
         groupRepository.save(new_group);
         joinGroup(new_group.getId(), member); // 그룹을 생성한 그룹장도 그룹 멤버로 가입

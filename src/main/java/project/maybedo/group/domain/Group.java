@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import project.maybedo.domain.*;
 import project.maybedo.group.groupJoin.Join;
+import project.maybedo.group.groupTag.GroupTag;
 
 import javax.persistence.*;
 import java.time.LocalDate;
