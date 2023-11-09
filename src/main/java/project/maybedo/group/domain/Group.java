@@ -44,5 +44,5 @@ public class Group {
 
     @OneToMany(mappedBy = "group")
     @JsonManagedReference
-    private List<GroupTag> group_tag_list = new ArrayList<>();
+    private List<GroupTag> groupTags = new ArrayList<>();
 }

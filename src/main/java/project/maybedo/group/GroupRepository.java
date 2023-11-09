@@ -6,4 +6,6 @@ import project.maybedo.group.domain.Group;
 import java.util.List;
 
 public interface GroupRepository extends JpaRepository<Group, Integer> {
+
+    List<Group> findByGroupTags_TagId(int tagId);
 }
