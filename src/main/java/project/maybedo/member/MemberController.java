@@ -35,9 +35,10 @@ public class MemberController {
         System.out.println("login 호출됨");
         Member principal = memberService.login(memberLoginDTO.getUsername(), memberLoginDTO.getPassword());
 
-        if (principal != null) {
+        if (principal != null)
             session.setAttribute("principal", principal);
-        }
+        if (principal == null)
+            return new ResponseDto<Integer> (HttpStatus.OK.value(), -1);
         return new ResponseDto<Integer> (HttpStatus.OK.value(), 1);
     }
 
