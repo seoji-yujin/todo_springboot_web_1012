@@ -19,6 +19,7 @@ import java.util.List;
 public class TodoController {
 
     private final TodoService todoService;
+    private final TodoRepository todoRepository;
 
     // 해당 날짜 투두 리스트 가져오기
     @GetMapping("/todo/get")

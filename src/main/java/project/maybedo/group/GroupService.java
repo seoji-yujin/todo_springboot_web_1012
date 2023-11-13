@@ -69,7 +69,7 @@ public class GroupService {
             GroupTag groupTag = new GroupTag();
             groupTag.setGroup(new_group);
             groupTag.setTag(tag);
-            new_group.getGroup_tag_list().add(groupTag);
+            new_group.getGroupTags().add(groupTag);
             groupTagRepository.save(groupTag);
         }
         groupRepository.save(new_group);

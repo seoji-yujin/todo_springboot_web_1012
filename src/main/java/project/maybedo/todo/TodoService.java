@@ -33,7 +33,10 @@ public class TodoService
     public void done(int id) {
         Todo todo = todoRepository.findById(id)
                 .orElseThrow(()->new IllegalArgumentException("존재하지 않는 id : " + id));
-        todo.setStatus(Status.DONE);
+        if (todo.getStatus() == Status.YET)
+            todo.setStatus(Status.DONE);
+        else if (todo.getStatus() == Status.DONE)
+            todo.setStatus(Status.YET);
         this.todoRepository.save(todo);
     }
 
