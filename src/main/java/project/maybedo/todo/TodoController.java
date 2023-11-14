@@ -1,6 +1,7 @@
 package project.maybedo.todo;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,11 +23,11 @@ public class TodoController {
     private final TodoRepository todoRepository;
 
     // 해당 날짜 투두 리스트 가져오기
-    @GetMapping("/todo/get")
-    public ResponseDto<List<Todo>> getTodosForDay(@RequestBody TodoGetDTO todoGetDTO, HttpSession session) {
+    @GetMapping("/todo/get/{date}")
+    public ResponseDto<List<Todo>> getTodosForDay(
+            @PathVariable(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date, HttpSession session) {
         Member member = (Member) session.getAttribute("principal");
         // 사용자가 없을 경우 에러 코드 반환
-        LocalDate date = todoGetDTO.getDate();
         if (date == null)
             date = LocalDate.now();  // 따로 날짜를 입력받지 않았다면 오늘 날짜
         List<Todo> todos = todoService.getTodosByMemberAndDate(member, date);
