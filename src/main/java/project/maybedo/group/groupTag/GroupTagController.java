@@ -1,6 +1,7 @@
 package project.maybedo.group.groupTag;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,13 +23,12 @@ import java.util.List;
 public class GroupTagController {
 
     private final TagRepository tagRepository;
-//    private final GroupTagRepository groupTagRepository;
     private final GroupRepository groupRepository;
 
-    @GetMapping("/find/tag/groups")
-    public ResponseDto<List<Group>> findGroupWithTag(@RequestBody GroupTagRequsetDTO groupTagRequsetDTO)
+    @GetMapping("/find/tag/groups/{content}")
+    public ResponseDto<List<Group>> findGroupWithTag (@PathVariable String content)
     {
-        Tag tag = tagRepository.findByContent(groupTagRequsetDTO.getContent());
+        Tag tag = tagRepository.findByContent(content);
         int id = tag.getId();
 
         List<Group> tagGroup = groupRepository.findByGroupTags_TagId(id);
