@@ -42,6 +42,13 @@ public class MemberController {
         return new ResponseDto<Integer> (HttpStatus.OK.value(), 1);
     }
 
+    // 로그아웃
+    @PostMapping("/member/logout")
+    public ResponseDto<Integer> logout(HttpSession session) {
+        session.invalidate();   // 세션 무효화
+        return new ResponseDto<Integer> (HttpStatus.OK.value(), 1);
+    }
+
     // 회원 프로필 수정
     @PutMapping("/member/update")
     public ResponseDto<Member> update(@RequestBody MemberUpdateDTO memberUpdateDTO, HttpSession session) {
