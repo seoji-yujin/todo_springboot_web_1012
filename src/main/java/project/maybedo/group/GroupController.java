@@ -9,6 +9,7 @@ import project.maybedo.member.Member;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,6 +21,12 @@ public class GroupController {
     @GetMapping("/groups")
     public ResponseDto<List> allList() {
         return new ResponseDto<List>(HttpStatus.OK.value(), groupService.getAll());
+    }
+
+    // 그룹 하나 조회
+    @GetMapping("/group/{id}")
+    public ResponseDto<Optional<Group>> getGroup(@PathVariable int id) {
+        return new ResponseDto<Optional<Group>>(HttpStatus.OK.value(),  groupService.getGroup(id));
     }
 
     // 그룹 생성
@@ -42,13 +49,13 @@ public class GroupController {
 
     // 그룹의 멤버를 반환하는 컨트롤러
     @GetMapping ("/group/members/{id}")
-    public ResponseDto<Integer> findMemberInGroup(@PathVariable int id)
+    public ResponseDto<List<Member>> findMemberInGroup(@PathVariable int id)
     {
         List<Member> members = groupService.findMemberInGroup(id);
         for (Member m : members) {
             System.out.println("member: "+m);
         }
-        return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
+        return new ResponseDto<List<Member>>(HttpStatus.OK.value(), members);
     }
 
 }

@@ -14,6 +14,7 @@ import project.maybedo.tag.TagRepository;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -27,6 +28,11 @@ public class GroupService {
     // 전체 그룹 조회
     public List<Group> getAll(){
         return groupRepository.findAll();
+    }
+
+    // 그룹 1개 조회
+    public Optional<Group> getGroup(int group_id) {
+        return groupRepository.findById(group_id);
     }
 
     // 그룹 가입
