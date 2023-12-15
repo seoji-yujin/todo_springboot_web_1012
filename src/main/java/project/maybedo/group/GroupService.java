@@ -46,8 +46,12 @@ public class GroupService {
         join.setGroup(group);
         join.setMember(member);
         join.setDate(LocalDate.now());
-
         joinRepository.save(join);
+        // 가입 했으면 그룹 cur_member 인원 수 올려주기
+        Integer cur_member = group.getCur_member();
+        cur_member++;
+        group.setCur_member(cur_member);
+        groupRepository.save(group);
     }
 
     //  그룹 생성
@@ -59,6 +63,7 @@ public class GroupService {
         new_group.setDescription(groupCreateDTO.getDescription());  // 그룹 소개
         new_group.setLimit_member(groupCreateDTO.getLimit_member());  // 그룹 최대 인원
         new_group.setPhoto_url(groupCreateDTO.getPhoto_url());  // 그룹 대표 사진
+        new_group.setCur_member(0);
 
         // 해시태그 저장
         List<String> tagContents = groupCreateDTO.getTag();
