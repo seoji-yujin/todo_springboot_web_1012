@@ -23,6 +23,7 @@ public class Group {
     private String name;
     private LocalDate expire_date;
     private Integer limit_member;
+    private Integer cur_member;  // 현재 인원 수
     private String description;
     private String photo_url;
 
