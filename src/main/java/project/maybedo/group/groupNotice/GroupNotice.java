@@ -1,23 +1,22 @@
-package project.maybedo.domain;
+package project.maybedo.group.groupNotice;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 import project.maybedo.group.domain.Group;
 
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Entity
 @Getter @Setter
-public class Notice {
+public class GroupNotice {
         @Id
         @GeneratedValue
-        @Column(name = "notice_id")
+        @Column(name = "group_notice_id")
         private int id;
         private String content;
-        private LocalDate date;
         @ManyToOne(fetch = FetchType.LAZY)
+        @JsonBackReference
         @JoinColumn(name = "group_id")
         private Group group;
     }
