@@ -3,7 +3,9 @@ package project.maybedo.todo;
 import lombok.RequiredArgsConstructor;
 import net.bytebuddy.asm.Advice;
 import org.springframework.stereotype.Service;
+import project.maybedo.group.groupJoin.Join;
 import project.maybedo.member.Member;
+import project.maybedo.member.MemberRepository;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -13,6 +15,7 @@ import java.util.List;
 public class TodoService
 {
     private final TodoRepository todoRepository;
+    private final MemberRepository memberRepository;
 
     // 투두 작성
     public Todo create(Member member, String content, LocalDate date) {
@@ -29,15 +32,41 @@ public class TodoService
         return (todo);
     }
 
+    // 달성률 체크
+    public void checkAchievement(Member member, List<Todo> todos)
+    {
+        int size = todos.size();
+        int success = 0;
+
+        for(Todo todo : todos)
+        {
+            if (todo.getStatus() == Status.DONE)
+                success++;
+        }
+        double achievementPercentage = (double) success / size * 100;
+        member.setAchievement(achievementPercentage);
+        memberRepository.save(member);
+    }
+
     // 완료 표시
-    public void done(int id) {
+    public void done(int id, Member member) {
         Todo todo = todoRepository.findById(id)
-                .orElseThrow(()->new IllegalArgumentException("존재하지 않는 id : " + id));
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 id : " + id));
         if (todo.getStatus() == Status.YET)
             todo.setStatus(Status.DONE);
         else if (todo.getStatus() == Status.DONE)
             todo.setStatus(Status.YET);
         this.todoRepository.save(todo);
+
+        // 만약 오늘 날짜 투두라면 달성률 갱신
+        LocalDate today = LocalDate.now();
+        System.out.println(today);
+        System.out.println(todo.getDate());
+        if (todo.getDate().equals(today))
+        {
+            List<Todo> todos = todoRepository.findByMemberAndDate(member, today);
+            checkAchievement(member, todos);
+        }
     }
 
     // 투두 삭제
@@ -60,4 +89,6 @@ public class TodoService
     public List<Todo> getTodosByMemberAndDate(Member member, LocalDate date){
         return todoRepository.findByMemberAndDate(member, date);
     }
+
+
 }

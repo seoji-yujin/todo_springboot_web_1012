@@ -27,6 +27,8 @@ public class Member {
     private String password;
     private String message;
     private String photo_url;
+    private double achievement;
+
     @JsonManagedReference
     @OneToMany(mappedBy = "member")
     private List<Todo> todo_list = new ArrayList<>();
