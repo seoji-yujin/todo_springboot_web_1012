@@ -48,14 +48,16 @@ public class TodoController {
 
     // 투두 완료 체크
     @PutMapping("/todo/done/{id}")
-    public ResponseDto<Integer> todoDoneCheck(@PathVariable int id) {
-        todoService.done(id);
+    public ResponseDto<Integer> todoDoneCheck(@PathVariable int id, HttpSession session) {
+        Member member = (Member)session.getAttribute("principal");
+        todoService.done(id, member);
         return new ResponseDto<Integer>(HttpStatus.OK.value(), id);
     }
 
     // 투두 삭제
     @DeleteMapping("/todo/delete/{id}")
-    public ResponseDto<Integer> todoDelete(@PathVariable int id) {
+    public ResponseDto<Integer> todoDelete(@PathVariable int id, HttpSession session) {
+        Member member = (Member)session.getAttribute("principal");
         todoService.delete(id);
         return new ResponseDto<Integer>(HttpStatus.OK.value(), id);
     }
@@ -66,5 +68,6 @@ public class TodoController {
         Todo new_todo = todoService.update(id, todoUpdateDTO.getContent());
         return new ResponseDto<Todo>(HttpStatus.OK.value(), new_todo);
     }
+
 
 }
