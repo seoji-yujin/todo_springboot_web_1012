@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import project.maybedo.domain.*;
 import project.maybedo.group.groupJoin.Join;
+import project.maybedo.group.groupNotice.GroupNotice;
 import project.maybedo.group.groupTag.GroupTag;
 
 import javax.persistence.*;
@@ -31,7 +32,8 @@ public class Group {
     private List<GroupTodo> group_todo_list = new ArrayList<>();
 
     @OneToMany(mappedBy = "group")
-    private List<Notice> notice_list = new ArrayList<>();
+    @JsonManagedReference
+    private List<GroupNotice> notice_list = new ArrayList<>();
 
     @OneToMany(mappedBy = "group")
     private List<Message> message_list = new ArrayList<>();

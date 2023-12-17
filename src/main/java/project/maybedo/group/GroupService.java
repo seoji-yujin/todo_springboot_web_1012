@@ -41,7 +41,7 @@ public class GroupService {
         // 그룹 찾아오고
         Group group = groupRepository.findById(group_id)
                 .orElseThrow(()->new IllegalArgumentException("존재하지 않는 그룹 : " + group_id));
-
+        System.out.println(group.getId());
         Join join = new Join();
         join.setGroup(group);
         join.setMember(member);
