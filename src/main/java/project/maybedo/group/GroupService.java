@@ -45,9 +45,16 @@ public class GroupService {
 
         // 해당 그룹에 이미 가입되어 있는 유저인지 확인
         int member_id = member.getId();
-        Join find_join = joinRepository.findByMember_IdAndGroup_Id(member_id, group_id);
-        if (find_join == null)
-            return (-1);
+        List<Join> joinList = group.getJoin_list();
+        for (Join join : joinList)
+        {
+            if (join.getMember().getId() == member_id)
+                return (-1);
+        }
+
+        // 그룹 최대인원 넘어가는지 확인
+        if (group.getCur_member() + 1 > group.getLimit_member())
+            return (-2);
 
         Join join = new Join();
         join.setGroup(group);
@@ -117,6 +124,20 @@ public class GroupService {
         {
             groupRepository.delete(group);
         }
+    }
+
+    // 그룹 가입 여부 반환
+    public boolean isJoin(int group_id, int member_id) {
+        Group group = groupRepository.findById(group_id)
+                .orElseThrow(()->new IllegalArgumentException("존재하지 않는 그룹 : " + group_id));
+
+        List<Join> joinList = group.getJoin_list();
+        for (Join join : joinList)
+        {
+            if (join.getMember().getId() == member_id)
+                return (true);
+        }
+        return (false);
     }
 
 }

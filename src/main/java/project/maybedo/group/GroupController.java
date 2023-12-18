@@ -1,6 +1,7 @@
 package project.maybedo.group;
 
 import lombok.RequiredArgsConstructor;
+import org.hibernate.annotations.SqlFragmentAlias;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import project.maybedo.dto.ResponseDto;
@@ -27,6 +28,17 @@ public class GroupController {
     @GetMapping("/group/{id}")
     public ResponseDto<Optional<Group>> getGroup(@PathVariable int id) {
         return new ResponseDto<Optional<Group>>(HttpStatus.OK.value(),  groupService.getGroup(id));
+    }
+
+    // 그룹 가입 여부 반환
+    @GetMapping("/group/check_join/{group_id}")
+    public ResponseDto<String> getGroup(@PathVariable int group_id, HttpSession session) {
+        Member member = (Member)session.getAttribute("principal");
+        int member_id = member.getId();
+        if (groupService.isJoin(group_id, member_id))
+            return new ResponseDto<String>(HttpStatus.OK.value(),  "join");
+        return new ResponseDto<String>(HttpStatus.OK.value(),  "not join");
+
     }
 
     // 그룹 생성
