@@ -36,12 +36,19 @@ public class GroupService {
     }
 
     // 그룹 가입
-    public void joinGroup(int group_id, Member member)
+    public int joinGroup(int group_id, Member member)
     {
         // 그룹 찾아오고
         Group group = groupRepository.findById(group_id)
                 .orElseThrow(()->new IllegalArgumentException("존재하지 않는 그룹 : " + group_id));
         System.out.println(group.getId());
+
+        // 해당 그룹에 이미 가입되어 있는 유저인지 확인
+        int member_id = member.getId();
+        Join find_join = joinRepository.findByMember_IdAndGroup_Id(member_id, group_id);
+        if (find_join == null)
+            return (-1);
+
         Join join = new Join();
         join.setGroup(group);
         join.setMember(member);
@@ -52,6 +59,7 @@ public class GroupService {
         cur_member++;
         group.setCur_member(cur_member);
         groupRepository.save(group);
+        return (0);
     }
 
     //  그룹 생성

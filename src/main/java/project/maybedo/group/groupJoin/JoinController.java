@@ -21,7 +21,8 @@ public class JoinController {
     public ResponseDto<Integer> joinGroup(@PathVariable int group_id, HttpSession session)
     {
         Member member = (Member)session.getAttribute("principal");
-        groupService.joinGroup(group_id, member);
+        if (groupService.joinGroup(group_id, member) == -1)
+            return new ResponseDto<Integer>(HttpStatus.OK.value(), -1);
         return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
     }
 }
