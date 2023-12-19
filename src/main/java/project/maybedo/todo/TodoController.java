@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import project.maybedo.dto.ResponseDto;
 import project.maybedo.member.Member;
+import project.maybedo.member.MemberRepository;
 import project.maybedo.todo.todoDTO.TodoCreateDTO;
 import project.maybedo.todo.todoDTO.TodoGetDTO;
 import project.maybedo.todo.todoDTO.TodoUpdateDTO;
@@ -21,16 +22,26 @@ public class TodoController {
 
     private final TodoService todoService;
     private final TodoRepository todoRepository;
+    private final MemberRepository memberRepository;
 
-    // 해당 날짜 투두 리스트 가져오기
+    // 로그인한 사용자의 특정 날짜 투두 리스트 가져오기
     @GetMapping("/todo/get/{date}")
     public ResponseDto<List<Todo>> getTodosForDay(
             @PathVariable(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date, HttpSession session) {
         Member member = (Member) session.getAttribute("principal");
-        // 사용자가 없을 경우 에러 코드 반환
         if (date == null)
             date = LocalDate.now();  // 따로 날짜를 입력받지 않았다면 오늘 날짜
         List<Todo> todos = todoService.getTodosByMemberAndDate(member, date);
+        if (todos == null)
+            return new ResponseDto<List<Todo>>(HttpStatus.NOT_FOUND.value(), null);  // 빈 화면
+        return new ResponseDto<List<Todo>>(HttpStatus.OK.value(), todos);
+    }
+
+    // 특정 사용자의 오늘 투두 반환
+    @GetMapping("/todo/{username}")
+    public ResponseDto<List<Todo>> getUserTodosToday(@PathVariable String username) {
+        Member member = memberRepository.findByUsername(username);
+        List<Todo> todos = todoService.getTodosByMemberAndDate(member, LocalDate.now());
         if (todos == null)
             return new ResponseDto<List<Todo>>(HttpStatus.NOT_FOUND.value(), null);  // 빈 화면
         return new ResponseDto<List<Todo>>(HttpStatus.OK.value(), todos);
