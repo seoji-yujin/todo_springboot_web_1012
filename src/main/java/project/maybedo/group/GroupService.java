@@ -8,6 +8,7 @@ import project.maybedo.group.groupJoin.JoinRepository;
 import project.maybedo.group.groupTag.GroupTag;
 import project.maybedo.group.groupTag.GroupTagRepository;
 import project.maybedo.member.Member;
+import project.maybedo.member.MemberRepository;
 import project.maybedo.tag.Tag;
 import project.maybedo.tag.TagRepository;
 
@@ -20,6 +21,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class GroupService {
 
+    private final MemberRepository memberRepository;
     private final GroupRepository groupRepository;
     private final JoinRepository joinRepository;
     private final TagRepository tagRepository;   // 태그 저장하는
@@ -67,6 +69,18 @@ public class GroupService {
         group.setCur_member(cur_member);
         groupRepository.save(group);
         return (0);
+    }
+
+    //  그룹 나가기
+    public void removeUserFromGroup(int member_id, int group_id)
+    {
+        Group group = groupRepository.findById(group_id)
+                .orElseThrow(()->new IllegalArgumentException("존재하지 않는 그룹 : " + group_id));
+        Member member = memberRepository.findById(member_id)
+                .orElseThrow(()->new IllegalArgumentException("존재하지 않는 멤버 : " + member_id));
+
+        Join join = joinRepository.findByGroup_IdAndMember_Id(group_id, member_id);
+        joinRepository.delete(join);
     }
 
     //  그룹 생성

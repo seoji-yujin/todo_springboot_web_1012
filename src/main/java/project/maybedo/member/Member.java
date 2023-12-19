@@ -46,7 +46,7 @@ public class Member {
     @OneToMany(mappedBy = "member")
     private List<Message> message_list = new ArrayList<>();
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Join> join_list = new ArrayList<>();
 

@@ -41,7 +41,7 @@ public class Group {
     @OneToMany(mappedBy = "group")
     private List<Select> select_list = new ArrayList<>();
 
-    @OneToMany(mappedBy = "group")
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Join> join_list = new ArrayList<>();
 
