@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
+import project.maybedo.image.Image;
 import project.maybedo.maybedo.Maybedo;
 import project.maybedo.domain.Message;
 import project.maybedo.domain.Schedule;
@@ -26,7 +27,9 @@ public class Member {
     private String email;
     private String password;
     private String message;
-    private String photo_url;
+//    private String photo_url;
+    private String original_file_name;
+    private String stored_file_name;
     private double achievement;
 
     @JsonManagedReference
@@ -43,7 +46,11 @@ public class Member {
     @OneToMany(mappedBy = "member")
     private List<Message> message_list = new ArrayList<>();
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Join> join_list = new ArrayList<>();
+
+    @OneToOne(mappedBy = "member", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Image image;
+
 }
