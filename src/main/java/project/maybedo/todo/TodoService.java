@@ -18,11 +18,11 @@ public class TodoService
     private final MemberRepository memberRepository;
 
     // 달성률 체크
-    public void checkAchievement(Member member, Todo t)
+    public void checkAchievement(Member member, LocalDate todoDate)
     {
         // 만약 수정, 추가, 삭제한 투두가 오늘 날짜라면 달성률 갱신
         LocalDate today = LocalDate.now();
-        if (t.getDate().equals(today))
+        if (todoDate.equals(today))
         {
             List<Todo> todos = todoRepository.findByMemberAndDate(member, today);
 
@@ -51,7 +51,7 @@ public class TodoService
         else
             todo.setDate(date);  // 날짜 정보가 들어온다면 해당 날짜에 투두 저장
         this.todoRepository.save(todo);
-        checkAchievement(member, todo);
+        checkAchievement(member, todo.getDate());
         return (todo);
     }
 
@@ -64,15 +64,15 @@ public class TodoService
         else if (todo.getStatus() == Status.DONE)
             todo.setStatus(Status.YET);
         this.todoRepository.save(todo);
-        checkAchievement(member, todo);
+        checkAchievement(member, todo.getDate());
     }
 
     // 투두 삭제
     public void delete(int id, Member member) {
         Todo todo = todoRepository.findById(id)
                 .orElseThrow(()->new IllegalArgumentException("존재하지 않는 id : " + id));
-        checkAchievement(member, todo);
         this.todoRepository.delete(todo);
+        checkAchievement(member, todo.getDate());
     }
 
     // 투두 수정
