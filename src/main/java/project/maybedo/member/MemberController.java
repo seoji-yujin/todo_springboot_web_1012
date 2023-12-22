@@ -88,5 +88,12 @@ public class MemberController {
                 .build();
     }
 
+//    // 로그인한 사용자 정보 반환
+//    @GetMapping("/member/inform")
+//    public ResponseDto<Integer> memberInform(HttpSession session)
+//    {
+//        Member member = (Member) session.getAttribute("principal");
+//
+//    }
 
 }
