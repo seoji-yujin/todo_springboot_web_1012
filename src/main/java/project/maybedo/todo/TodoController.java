@@ -37,11 +37,13 @@ public class TodoController {
         return new ResponseDto<List<Todo>>(HttpStatus.OK.value(), todos);
     }
 
-    // 특정 사용자의 오늘 투두 반환
-    @GetMapping("/todo/{username}")
-    public ResponseDto<List<Todo>> getUserTodosToday(@PathVariable String username) {
+    // 특정 사용자의 특정 날짜 투두 반환
+    @GetMapping("/todo/{username}/{date}")
+    public ResponseDto<List<Todo>> getUserTodosDay(@PathVariable String username, @PathVariable(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         Member member = memberRepository.findByUsername(username);
-        List<Todo> todos = todoService.getTodosByMemberAndDate(member, LocalDate.now());
+        if (date == null)
+            date = LocalDate.now();  // 따로 날짜를 입력받지 않았다면 오늘 날짜
+        List<Todo> todos = todoService.getTodosByMemberAndDate(member, date);
         if (todos == null)
             return new ResponseDto<List<Todo>>(HttpStatus.NOT_FOUND.value(), null);  // 빈 화면
         return new ResponseDto<List<Todo>>(HttpStatus.OK.value(), todos);
