@@ -71,14 +71,15 @@ public class TodoController {
     @DeleteMapping("/todo/delete/{id}")
     public ResponseDto<Integer> todoDelete(@PathVariable int id, HttpSession session) {
         Member member = (Member)session.getAttribute("principal");
-        todoService.delete(id);
+        todoService.delete(id, member);
         return new ResponseDto<Integer>(HttpStatus.OK.value(), id);
     }
 
     // 투두 수정
     @PutMapping("/todo/update/{id}")
-    public ResponseDto<Todo> todoUpdate(@PathVariable int id, @RequestBody TodoUpdateDTO todoUpdateDTO) {
-        Todo new_todo = todoService.update(id, todoUpdateDTO.getContent());
+    public ResponseDto<Todo> todoUpdate(@PathVariable int id, @RequestBody TodoUpdateDTO todoUpdateDTO, HttpSession session) {
+        Member member = (Member)session.getAttribute("principal");
+        Todo new_todo = todoService.update(id, member, todoUpdateDTO.getContent());
         return new ResponseDto<Todo>(HttpStatus.OK.value(), new_todo);
     }
 

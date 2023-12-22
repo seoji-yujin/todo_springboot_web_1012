@@ -36,6 +36,5 @@ public class JoinController {
     {
         Member member = (Member)session.getAttribute("principal");
         groupService.removeUserFromGroup(member.getId(), group_id);
-        return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
-    }
+        return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);}
 }

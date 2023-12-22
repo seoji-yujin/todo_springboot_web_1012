@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import project.maybedo.dto.ResponseDto;
 import project.maybedo.group.domain.Group;
+import project.maybedo.member.memberDTO.MemberInform;
 import project.maybedo.member.memberDTO.MemberJoinDTO;
 import project.maybedo.member.memberDTO.MemberLoginDTO;
 import project.maybedo.member.memberDTO.MemberUpdateDTO;
@@ -88,5 +89,16 @@ public class MemberController {
                 .build();
     }
 
+    // 로그인한 사용자 정보 반환
+    @GetMapping("/member/inform")
+    public ResponseDto<MemberInform> memberInform(HttpSession session)
+    {
+        Member member = (Member) session.getAttribute("principal");
+        MemberInform inform = new MemberInform();
+        inform.setId(member.getUsername());
+        inform.setName(member.getName());
+        // 이미지 주소 추가
+        return new ResponseDto<MemberInform> (HttpStatus.OK.value(), inform);
+    }
 
 }
