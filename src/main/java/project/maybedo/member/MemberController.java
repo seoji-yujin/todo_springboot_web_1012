@@ -94,6 +94,9 @@ public class MemberController {
     public ResponseDto<MemberInform> memberInform(HttpSession session)
     {
         Member member = (Member) session.getAttribute("principal");
+        if(member == null) {
+            return new ResponseDto<MemberInform> (HttpStatus.OK.value(), null);
+        }
         MemberInform inform = new MemberInform();
         inform.setId(member.getUsername());
         inform.setName(member.getName());
