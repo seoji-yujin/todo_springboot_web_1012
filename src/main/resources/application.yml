@@ -22,5 +22,5 @@ spring:
 logging.level:
   org.hibernate.SQL: debug
 
-#file:
-#  path: /Users/${USER}/Desktop/project/image
+file:
+  path: /Users/${USER}/Desktop/project/image
