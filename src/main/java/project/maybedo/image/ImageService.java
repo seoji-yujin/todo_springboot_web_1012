@@ -37,6 +37,11 @@ public class ImageService {
 
             Image image = imageRepository.findByMember(member);
             if (image != null) {
+                // 사용자의 이전 프로필 이미지를 로컬 저장소에서 제거
+                String prevFilename = image.getUrl().substring("/profileImages/".length());
+                File deleteFile = new File(uploadFolder + prevFilename);
+                deleteFile.delete();
+
                 // 이미지가 이미 존재하면 url 업데이트
                 image.updateUrl("/profileImages/" + imageFileName);
             } else {
