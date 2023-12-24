@@ -60,8 +60,8 @@ public class MemberController {
 
     // 멤버 1명 조회
     @GetMapping("/member")
-    public ResponseDto<Member> viewMember(@RequestParam int id) {
-        Member member = memberService.getMember(id);
+    public ResponseDto<Member> viewMember(@RequestParam String username) {
+        Member member = memberService.getMember(username);
         return new ResponseDto<Member> (HttpStatus.OK.value(), member);
     }
 

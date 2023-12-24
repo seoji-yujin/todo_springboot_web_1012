@@ -76,9 +76,11 @@ public class MemberService {
     }
 
     // 멤버 조회
-    public Member getMember(int id) {
-        Member m = memberRepository.findById(id)
-                .orElseThrow(()->new IllegalArgumentException("존재하지 않는 id : " + id));
+    public Member getMember(String username) {
+        Member m = memberRepository.findByUsername(username);
+        if(m == null) {
+            throw new IllegalArgumentException("존재하지 않는 username : " + username);
+        }
         return (m);
     }
 
