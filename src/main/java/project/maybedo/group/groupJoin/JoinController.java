@@ -22,10 +22,13 @@ public class JoinController {
     @PostMapping("/group/join/{group_id}")
     public ResponseDto<String> joinGroup(@PathVariable int group_id, HttpSession session)
     {
+        int error_flag;
         Member member = (Member)session.getAttribute("principal");
-        if (groupService.joinGroup(group_id, member) == -1)
+
+        error_flag = groupService.joinGroup(group_id, member);
+        if (error_flag == -1)
             return new ResponseDto<String>(HttpStatus.OK.value(), "Already Join");
-        if (groupService.joinGroup(group_id, member) == -2)
+        else if (error_flag == -2)
             return new ResponseDto<String>(HttpStatus.OK.value(), "Over Limit");
         return new ResponseDto<String>(HttpStatus.OK.value(), "Success");
     }
