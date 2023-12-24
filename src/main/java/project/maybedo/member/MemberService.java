@@ -1,6 +1,7 @@
 package project.maybedo.member;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.maybedo.group.GroupRepository;
@@ -95,6 +96,18 @@ public class MemberService {
             myGroups.add(join.getGroup());
         }
         return (myGroups);
+    }
+
+    // 달성률 매일 밤 초기화
+    @Scheduled(cron = "0 0 0 * * ?")  // 매일 밤 자정에 초기화 해주는 크론식
+    public void resetAchievement() {
+        List<Member> members = memberRepository.findAll();
+
+        for (Member member : members) {
+            member.setAchievement(0.0);
+        }
+
+        memberRepository.saveAll(members);
     }
 
 }
