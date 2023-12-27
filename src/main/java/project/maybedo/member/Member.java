@@ -51,6 +51,7 @@ public class Member {
     private List<Join> join_list = new ArrayList<>();
 
     @OneToOne(mappedBy = "member", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
     private Image image;
 
 }

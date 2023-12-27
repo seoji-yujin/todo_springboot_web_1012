@@ -1,5 +1,6 @@
 package project.maybedo.image;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import project.maybedo.member.Member;
 
@@ -21,6 +22,7 @@ public class Image {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
+    @JsonBackReference
     private Member member;
 
     public void updateUrl(String newUrl) {
