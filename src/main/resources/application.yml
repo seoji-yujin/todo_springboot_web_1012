@@ -18,9 +18,9 @@ spring:
         show_sql: true
         format_sql: true
         generate_statistics: true
+  mvc:
+    static-path-pattern: /images/**
+
 
 logging.level:
   org.hibernate.SQL: debug
-
-file:
-  path: /Users/${USER}/Desktop/project/image

@@ -20,9 +20,6 @@ public class ImageService {
     private final MemberRepository memberRepository;
     private final ImageRepository imageRepository;
 
-    @Value("${file.path}")
-    private String uploadFolder;
-
     public String upload(ImageUploadDTO imageUploadDTO, String username) {
         Member member = memberRepository.findByUsername(username);
         MultipartFile file = imageUploadDTO.getFile();
@@ -32,8 +29,10 @@ public class ImageService {
         int idx = originFileName.lastIndexOf('.');
         String extension = originFileName.substring(idx);
 
+        String projectPath = System.getProperty("user.dir") + "/src/main/images/"; // 파일이 저장될 폴더의 경로
+        System.out.println("projectPath"+projectPath);
         String resultFileName = uuid + extension;
-        File destinationFile = new File(uploadFolder + resultFileName);
+        File destinationFile = new File(projectPath + resultFileName);
 
         try {
             file.transferTo(destinationFile);
@@ -41,17 +40,18 @@ public class ImageService {
             Image image = imageRepository.findByMember(member);
             if (image != null) {
                 // 사용자의 이전 프로필 이미지를 로컬 저장소에서 제거
-                String prevFilename = image.getUrl().substring("/profileImages/".length());
-                File deleteFile = new File(uploadFolder + prevFilename);
-                deleteFile.delete();
+//                String prevFilename = image.getUrl().substring("/images/".length());
+//                System.out.println("prevFilename"+prevFilename);
+//                File deleteFile = new File(projectPath + prevFilename);
+//                deleteFile.delete();
 
                 // 이미지가 이미 존재하면 url 업데이트
-                image.updateUrl("/profileImages/" + resultFileName);
+                image.updateUrl(resultFileName);
             } else {
                 // 이미지가 없으면 객체 생성 후 저장
                 image = Image.builder()
                         .member(member)
-                        .url("/profileImages/" + resultFileName)
+                        .url(resultFileName)
                         .build();
             }
             imageRepository.save(image);
@@ -65,7 +65,7 @@ public class ImageService {
         Member member = memberRepository.findByUsername(username);
         Image image = imageRepository.findByMember(member);
 
-        String defaultImageUrl = "/profileImages/anonymous.png";
+        String defaultImageUrl = "anonymous.png";
 
         if (image == null) {
             return ImageResponseDTO.builder()
