@@ -23,14 +23,17 @@ public class ImageService {
     @Value("${file.path}")
     private String uploadFolder;
 
-    public void upload(ImageUploadDTO imageUploadDTO, String username) {
+    public String upload(ImageUploadDTO imageUploadDTO, String username) {
         Member member = memberRepository.findByUsername(username);
         MultipartFile file = imageUploadDTO.getFile();
 
         UUID uuid = UUID.randomUUID();
-        String imageFileName = uuid + "_" + file.getOriginalFilename();
+        String originFileName = file.getOriginalFilename();
+        int idx = originFileName.lastIndexOf('.');
+        String extension = originFileName.substring(idx);
 
-        File destinationFile = new File(uploadFolder + imageFileName);
+        String resultFileName = uuid + extension;
+        File destinationFile = new File(uploadFolder + resultFileName);
 
         try {
             file.transferTo(destinationFile);
@@ -43,18 +46,19 @@ public class ImageService {
                 deleteFile.delete();
 
                 // 이미지가 이미 존재하면 url 업데이트
-                image.updateUrl("/profileImages/" + imageFileName);
+                image.updateUrl("/profileImages/" + resultFileName);
             } else {
                 // 이미지가 없으면 객체 생성 후 저장
                 image = Image.builder()
                         .member(member)
-                        .url("/profileImages/" + imageFileName)
+                        .url("/profileImages/" + resultFileName)
                         .build();
             }
             imageRepository.save(image);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        return (resultFileName);
     }
 
     public ImageResponseDTO findImage(String username) {

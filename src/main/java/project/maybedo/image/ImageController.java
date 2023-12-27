@@ -16,10 +16,10 @@ import javax.servlet.http.HttpSession;
 public class ImageController {
     private final ImageService imageService;
     @PostMapping("/upload")
-    public ResponseDto<Integer> upload(ImageUploadDTO imageUploadDTO, HttpSession session) {
+    public ResponseDto<String> upload(ImageUploadDTO imageUploadDTO, HttpSession session) {
         Member member = (Member)session.getAttribute("principal");
-        imageService.upload(imageUploadDTO, member.getUsername());
+        String fileName = imageService.upload(imageUploadDTO, member.getUsername());
 
-        return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
+        return new ResponseDto<String>(HttpStatus.OK.value(), fileName);
     }
 }
