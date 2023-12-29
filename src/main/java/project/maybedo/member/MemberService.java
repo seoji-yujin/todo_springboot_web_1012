@@ -2,6 +2,7 @@ package project.maybedo.member;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.maybedo.group.GroupRepository;
@@ -32,11 +33,12 @@ public class MemberService {
         if (findMember == null)
         {
             Member new_member = new Member();
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
             new_member.setName(memberJoinDTO.getName());
             new_member.setEmail(memberJoinDTO.getEmail());
             new_member.setUsername(memberJoinDTO.getUsername());
-            new_member.setPassword(memberJoinDTO.getPassword());
+            new_member.setPassword(passwordEncoder.encode(memberJoinDTO.getPassword()));
             new_member.setPhoto_url(memberJoinDTO.getPhoto_url());
 
             return memberRepository.save(new_member).getId();
@@ -54,7 +56,14 @@ public class MemberService {
     // 로그인
     @Transactional(readOnly = true)  // select할 때 트랜잭션 시작, 서비스 종료 시에 트랜잭션 종료(정합성)
     public Member login(String username, String password) {
-        return memberRepository.findByUsernameAndPassword(username, password);
+        Member member = memberRepository.findByUsername(username);
+        if (member == null)
+            return (null);   // 회원이 없는 경우
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        boolean passwordMatch = passwordEncoder.matches(password, member.getPassword());
+        if (passwordMatch)
+            return (member);
+        return (null);    // 비밀번호가 틀린 경우
     }
 
     // 회원 정보 수정
