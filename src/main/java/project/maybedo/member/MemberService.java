@@ -2,6 +2,7 @@ package project.maybedo.member;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.maybedo.group.GroupRepository;
@@ -32,11 +33,12 @@ public class MemberService {
         if (findMember == null)
         {
             Member new_member = new Member();
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
             new_member.setName(memberJoinDTO.getName());
             new_member.setEmail(memberJoinDTO.getEmail());
             new_member.setUsername(memberJoinDTO.getUsername());
-            new_member.setPassword(memberJoinDTO.getPassword());
+            new_member.setPassword(passwordEncoder.encode(memberJoinDTO.getPassword()));
             new_member.setPhoto_url(memberJoinDTO.getPhoto_url());
 
             return memberRepository.save(new_member).getId();
