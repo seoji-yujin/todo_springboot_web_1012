@@ -27,7 +27,7 @@ public class Member {
     private String email;
     private String password;
     private String message;
-//    private String photo_url;
+    private String photo_url;
     private String original_file_name;
     private String stored_file_name;
     private double achievement;
@@ -50,7 +50,8 @@ public class Member {
     @JsonManagedReference
     private List<Join> join_list = new ArrayList<>();
 
-    @OneToOne(mappedBy = "member", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Image image;
+//    @OneToOne(mappedBy = "member", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    @JsonManagedReference
+//    private Image image;
 
 }

@@ -18,9 +18,14 @@ spring:
         show_sql: true
         format_sql: true
         generate_statistics: true
+  mvc:
+    static-path-pattern: /images/**
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
 
 logging.level:
   org.hibernate.SQL: debug
 
-file:
-  path: /Users/${USER}/Desktop/project/image
