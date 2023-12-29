@@ -56,7 +56,14 @@ public class MemberService {
     // 로그인
     @Transactional(readOnly = true)  // select할 때 트랜잭션 시작, 서비스 종료 시에 트랜잭션 종료(정합성)
     public Member login(String username, String password) {
-        return memberRepository.findByUsernameAndPassword(username, password);
+        Member member = memberRepository.findByUsername(username);
+        if (member == null)
+            return (null);   // 회원이 없는 경우
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        boolean passwordMatch = passwordEncoder.matches(password, member.getPassword());
+        if (passwordMatch)
+            return (member);
+        return (null);    // 비밀번호가 틀린 경우
     }
 
     // 회원 정보 수정
