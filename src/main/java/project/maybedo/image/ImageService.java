@@ -17,11 +17,9 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ImageService {
 
-    private final MemberRepository memberRepository;
     private final ImageRepository imageRepository;
 
-    public String upload(ImageUploadDTO imageUploadDTO, String username) {
-        Member member = memberRepository.findByUsername(username);
+    public String upload(ImageUploadDTO imageUploadDTO) {
         MultipartFile file = imageUploadDTO.getFile();
 
         UUID uuid = UUID.randomUUID();
@@ -30,51 +28,19 @@ public class ImageService {
         String extension = originFileName.substring(idx);
 
         String projectPath = System.getProperty("user.dir") + "/src/main/images/"; // 파일이 저장될 폴더의 경로
-        System.out.println("projectPath"+projectPath);
         String resultFileName = uuid + extension;
         File destinationFile = new File(projectPath + resultFileName);
 
         try {
             file.transferTo(destinationFile);
 
-            Image image = imageRepository.findByMember(member);
-            if (image != null) {
-                // 사용자의 이전 프로필 이미지를 로컬 저장소에서 제거
-//                String prevFilename = image.getUrl().substring("/images/".length());
-//                System.out.println("prevFilename"+prevFilename);
-//                File deleteFile = new File(projectPath + prevFilename);
-//                deleteFile.delete();
-
-                // 이미지가 이미 존재하면 url 업데이트
-                image.updateUrl(resultFileName);
-            } else {
-                // 이미지가 없으면 객체 생성 후 저장
-                image = Image.builder()
-                        .member(member)
-                        .url(resultFileName)
-                        .build();
-            }
+            Image image = new Image();
+            image.setUrl(resultFileName);
+            image.setOriginFileName(originFileName);
             imageRepository.save(image);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         return (resultFileName);
-    }
-
-    public ImageResponseDTO findImage(String username) {
-        Member member = memberRepository.findByUsername(username);
-        Image image = imageRepository.findByMember(member);
-
-        String defaultImageUrl = "anonymous.png";
-
-        if (image == null) {
-            return ImageResponseDTO.builder()
-                    .url(defaultImageUrl)
-                    .build();
-        } else {
-            return ImageResponseDTO.builder()
-                    .url(image.getUrl())
-                    .build();
-        }
     }
 }

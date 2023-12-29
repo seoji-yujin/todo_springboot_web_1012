@@ -18,12 +18,9 @@ public class Image {
     @Column(name = "image_id")
     private int id;
 
-    private String url;
+    private String originFileName;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
-    @JsonBackReference
-    private Member member;
+    private String url;
 
     public void updateUrl(String newUrl) {
         this.url = newUrl;

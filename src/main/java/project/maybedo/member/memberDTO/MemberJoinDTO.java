@@ -8,4 +8,5 @@ public class MemberJoinDTO {
     String name;
     String username;
     String password;
+    String photo_url;
 }
