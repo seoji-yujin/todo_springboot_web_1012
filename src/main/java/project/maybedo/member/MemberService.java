@@ -10,7 +10,9 @@ import project.maybedo.group.GroupService;
 import project.maybedo.group.domain.Group;
 import project.maybedo.group.groupJoin.Join;
 import project.maybedo.group.groupJoin.JoinRepository;
+import project.maybedo.image.Image;
 import project.maybedo.image.ImageRepository;
+import project.maybedo.image.ImageService;
 import project.maybedo.member.memberDTO.MemberJoinDTO;
 import project.maybedo.member.memberDTO.MemberUpdateDTO;
 import project.maybedo.todo.Todo;
@@ -24,7 +26,7 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
     private final JoinRepository joinRepository;
-    private final ImageRepository imageRepository;
+    private final ImageService imageService;
 
     // 회원가입(email, username, password)
     @Transactional
@@ -39,7 +41,7 @@ public class MemberService {
             new_member.setEmail(memberJoinDTO.getEmail());
             new_member.setUsername(memberJoinDTO.getUsername());
             new_member.setPassword(passwordEncoder.encode(memberJoinDTO.getPassword()));
-            new_member.setPhoto_url(memberJoinDTO.getPhoto_url());
+            new_member.setPhoto_url(imageService.upload(memberJoinDTO.getImage_file()));
 
             return memberRepository.save(new_member).getId();
         }

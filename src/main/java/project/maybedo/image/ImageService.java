@@ -19,8 +19,7 @@ public class ImageService {
 
     private final ImageRepository imageRepository;
 
-    public String upload(ImageUploadDTO imageUploadDTO) {
-        MultipartFile file = imageUploadDTO.getFile();
+    public String upload(MultipartFile file) {
 
         UUID uuid = UUID.randomUUID();
         String originFileName = file.getOriginalFilename();
