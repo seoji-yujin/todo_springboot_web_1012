@@ -27,9 +27,7 @@ public class Member {
     private String email;
     private String password;
     private String message;
-    private String photo_url;
-    private String original_file_name;
-    private String stored_file_name;
+    private String image_path;
     private double achievement;
 
     @JsonManagedReference

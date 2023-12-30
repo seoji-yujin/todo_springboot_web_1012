@@ -26,7 +26,7 @@ public class Group {
     private Integer limit_member;
     private Integer cur_member;  // 현재 인원 수
     private String description;
-    private String photo_url;
+    private String image_path;
 
     @OneToMany(mappedBy = "group")
     private List<GroupTodo> group_todo_list = new ArrayList<>();

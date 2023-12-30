@@ -1,6 +1,7 @@
 package project.maybedo.member.memberDTO;
 
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 @Data
 public class MemberJoinDTO {
@@ -8,5 +9,5 @@ public class MemberJoinDTO {
     String name;
     String username;
     String password;
-    String photo_url;
+    MultipartFile image_file;
 }
