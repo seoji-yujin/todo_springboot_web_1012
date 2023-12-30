@@ -7,6 +7,7 @@ import project.maybedo.group.groupJoin.Join;
 import project.maybedo.group.groupJoin.JoinRepository;
 import project.maybedo.group.groupTag.GroupTag;
 import project.maybedo.group.groupTag.GroupTagRepository;
+import project.maybedo.image.ImageService;
 import project.maybedo.member.Member;
 import project.maybedo.member.MemberRepository;
 import project.maybedo.tag.Tag;
@@ -26,6 +27,7 @@ public class GroupService {
     private final JoinRepository joinRepository;
     private final TagRepository tagRepository;   // 태그 저장하는
     private final GroupTagRepository groupTagRepository;  // 태그와 그룹 함께 저장하는
+    private final ImageService imageService;
 
     // 전체 그룹 조회
     public List<Group> getAll(){
@@ -90,7 +92,7 @@ public class GroupService {
         new_group.setExpire_date(LocalDate.now());
         new_group.setDescription(groupCreateDTO.getDescription());  // 그룹 소개
         new_group.setLimit_member(groupCreateDTO.getLimit_member());  // 그룹 최대 인원
-        new_group.setPhoto_url(groupCreateDTO.getPhoto_url());  // 그룹 대표 사진
+        new_group.setImage_path(imageService.upload(groupCreateDTO.getImage_file()));
         new_group.setCur_member(0);
 
         // 해시태그 저장
