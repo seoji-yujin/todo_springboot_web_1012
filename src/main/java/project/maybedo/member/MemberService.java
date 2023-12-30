@@ -41,7 +41,7 @@ public class MemberService {
             new_member.setEmail(memberJoinDTO.getEmail());
             new_member.setUsername(memberJoinDTO.getUsername());
             new_member.setPassword(passwordEncoder.encode(memberJoinDTO.getPassword()));
-            new_member.setPhoto_url(imageService.upload(memberJoinDTO.getImage_file()));
+            new_member.setImage_path(imageService.upload(memberJoinDTO.getImage_file()));
 
             return memberRepository.save(new_member).getId();
         }
