@@ -52,7 +52,7 @@ public class MemberController {
 
     // 회원 프로필 수정
     @PutMapping("/member/update")
-    public ResponseDto<Member> update(@RequestBody MemberUpdateDTO memberUpdateDTO, HttpSession session) {
+    public ResponseDto<Member> update(MemberUpdateDTO memberUpdateDTO, HttpSession session) {
         Member member = (Member) session.getAttribute("principal");
         Member update_member = memberService.update(memberUpdateDTO, member);
         return new ResponseDto<Member> (HttpStatus.OK.value(), update_member);
@@ -100,7 +100,7 @@ public class MemberController {
         MemberInform inform = new MemberInform();
         inform.setId(member.getUsername());
         inform.setName(member.getName());
-        // 이미지 주소 추가
+        inform.setImage(member.getImage_path());
         return new ResponseDto<MemberInform> (HttpStatus.OK.value(), inform);
     }
 

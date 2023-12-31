@@ -43,7 +43,7 @@ public class GroupController {
 
     // 그룹 생성
     @PostMapping("/group/create")
-    public ResponseDto<Group> createGroup(@RequestBody GroupCreateDTO groupCreateDTO, HttpSession session)
+    public ResponseDto<Group> createGroup(GroupCreateDTO groupCreateDTO, HttpSession session)
     {
         Member member = (Member)session.getAttribute("principal");
         Group group = groupService.create(groupCreateDTO, member);

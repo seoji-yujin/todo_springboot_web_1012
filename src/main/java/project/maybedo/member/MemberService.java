@@ -79,8 +79,8 @@ public class MemberService {
             update_member.setEmail(memberUpdateDTO.getEmail());
         if (memberUpdateDTO.getMessage() != null)
             update_member.setMessage(memberUpdateDTO.getMessage());
-        if (memberUpdateDTO.getPhoto_url() != null)
-            update_member.setImage_path(memberUpdateDTO.getPhoto_url());
+        if (memberUpdateDTO.getImage_file() != null)
+            update_member.setImage_path(imageService.upload(memberUpdateDTO.getImage_file()));
         memberRepository.save(update_member);
         return (update_member);
     }
