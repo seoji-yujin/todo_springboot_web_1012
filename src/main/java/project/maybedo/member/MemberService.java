@@ -80,7 +80,7 @@ public class MemberService {
         if (memberUpdateDTO.getMessage() != null)
             update_member.setMessage(memberUpdateDTO.getMessage());
         if (memberUpdateDTO.getPhoto_url() != null)
-            update_member.setPhoto_url(memberUpdateDTO.getPhoto_url());
+            update_member.setImage_path(memberUpdateDTO.getPhoto_url());
         memberRepository.save(update_member);
         return (update_member);
     }
