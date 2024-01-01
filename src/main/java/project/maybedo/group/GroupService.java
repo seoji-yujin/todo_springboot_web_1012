@@ -92,7 +92,11 @@ public class GroupService {
         new_group.setExpire_date(LocalDate.now());
         new_group.setDescription(groupCreateDTO.getDescription());  // 그룹 소개
         new_group.setLimit_member(groupCreateDTO.getLimit_member());  // 그룹 최대 인원
-        new_group.setImage_path(imageService.upload(groupCreateDTO.getImage_file()));
+        if (groupCreateDTO.getImage_file().getOriginalFilename() != null && !groupCreateDTO.getImage_file().getOriginalFilename().isEmpty()) {
+            new_group.setImage_path(imageService.upload(groupCreateDTO.getImage_file()));
+        } else {
+            new_group.setImage_path("");
+        }
         new_group.setCur_member(0);
 
         // 해시태그 저장
