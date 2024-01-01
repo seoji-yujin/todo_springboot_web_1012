@@ -23,9 +23,8 @@ public class MemberController {
 
     // 회원가입
     @PostMapping("/member/join")
-    public ResponseDto<Integer> save(@RequestParam("image_file") MultipartFile imageFile, MemberJoinDTO memberJoinDTO) {
+    public ResponseDto<Integer> save(MemberJoinDTO memberJoinDTO) {
         System.out.println("join 호출됨");
-        memberJoinDTO.setImage_file(imageFile);
         int id = memberService.join(memberJoinDTO);
         if (id == -1)   // 이미 존재하는 회원
             return new ResponseDto<Integer>(HttpStatus.OK.value(), id);

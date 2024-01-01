@@ -5,6 +5,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 import project.maybedo.group.GroupRepository;
 import project.maybedo.group.GroupService;
 import project.maybedo.group.domain.Group;
@@ -19,6 +20,7 @@ import project.maybedo.todo.Todo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -47,6 +49,8 @@ public class MemberService {
             } else {
                 new_member.setImage_path("");
             }
+//            Optional<MultipartFile> optionalImageFile = Optional.ofNullable(memberJoinDTO.getImage_file());
+//            optionalImageFile.ifPresent(imageFile -> new_member.setImage_path(imageService.upload(imageFile)));
             return memberRepository.save(new_member).getId();
         }
         return (-1);
