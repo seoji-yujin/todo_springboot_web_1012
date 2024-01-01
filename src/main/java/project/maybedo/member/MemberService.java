@@ -5,6 +5,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 import project.maybedo.group.GroupRepository;
 import project.maybedo.group.GroupService;
 import project.maybedo.group.domain.Group;
@@ -19,6 +20,7 @@ import project.maybedo.todo.Todo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -27,6 +29,7 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final JoinRepository joinRepository;
     private final ImageService imageService;
+    private final ImageRepository imageRepository;
 
     // 회원가입(email, username, password)
     @Transactional
@@ -41,8 +44,12 @@ public class MemberService {
             new_member.setEmail(memberJoinDTO.getEmail());
             new_member.setUsername(memberJoinDTO.getUsername());
             new_member.setPassword(passwordEncoder.encode(memberJoinDTO.getPassword()));
-            new_member.setImage_path(imageService.upload(memberJoinDTO.getImage_file()));
 
+            if (memberJoinDTO.getImage_file().getOriginalFilename() != null && !memberJoinDTO.getImage_file().getOriginalFilename().isEmpty()) {
+                new_member.setImage_path(imageService.upload(memberJoinDTO.getImage_file()));
+            } else {
+                new_member.setImage_path("");
+            }
             return memberRepository.save(new_member).getId();
         }
         return (-1);

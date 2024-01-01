@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import project.maybedo.dto.ResponseDto;
 import project.maybedo.group.domain.Group;
 import project.maybedo.member.memberDTO.MemberInform;

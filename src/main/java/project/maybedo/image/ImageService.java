@@ -11,6 +11,7 @@ import project.maybedo.member.MemberRepository;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -20,7 +21,6 @@ public class ImageService {
     private final ImageRepository imageRepository;
 
     public String upload(MultipartFile file) {
-
         UUID uuid = UUID.randomUUID();
         String originFileName = file.getOriginalFilename();
         int idx = originFileName.lastIndexOf('.');
