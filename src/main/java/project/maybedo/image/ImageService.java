@@ -20,7 +20,6 @@ public class ImageService {
     private final ImageRepository imageRepository;
 
     public String upload(MultipartFile file) {
-
         UUID uuid = UUID.randomUUID();
         String originFileName = file.getOriginalFilename();
         int idx = originFileName.lastIndexOf('.');

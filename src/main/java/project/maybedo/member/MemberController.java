@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import project.maybedo.dto.ResponseDto;
 import project.maybedo.group.domain.Group;
 import project.maybedo.member.memberDTO.MemberInform;
@@ -22,8 +23,9 @@ public class MemberController {
 
     // 회원가입
     @PostMapping("/member/join")
-    public ResponseDto<Integer> save(MemberJoinDTO memberJoinDTO) {
+    public ResponseDto<Integer> save(@RequestParam("image_file") MultipartFile imageFile, MemberJoinDTO memberJoinDTO) {
         System.out.println("join 호출됨");
+        memberJoinDTO.setImage_file(imageFile);
         int id = memberService.join(memberJoinDTO);
         if (id == -1)   // 이미 존재하는 회원
             return new ResponseDto<Integer>(HttpStatus.OK.value(), id);

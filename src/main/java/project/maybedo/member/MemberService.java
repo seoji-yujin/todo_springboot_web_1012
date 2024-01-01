@@ -27,6 +27,7 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final JoinRepository joinRepository;
     private final ImageService imageService;
+    private final ImageRepository imageRepository;
 
     // 회원가입(email, username, password)
     @Transactional
@@ -41,8 +42,11 @@ public class MemberService {
             new_member.setEmail(memberJoinDTO.getEmail());
             new_member.setUsername(memberJoinDTO.getUsername());
             new_member.setPassword(passwordEncoder.encode(memberJoinDTO.getPassword()));
-            new_member.setImage_path(imageService.upload(memberJoinDTO.getImage_file()));
-
+            if (memberJoinDTO.getImage_file() != null) {
+                new_member.setImage_path(imageService.upload(memberJoinDTO.getImage_file()));
+            } else {
+                new_member.setImage_path("");
+            }
             return memberRepository.save(new_member).getId();
         }
         return (-1);
