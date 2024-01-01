@@ -44,13 +44,12 @@ public class MemberService {
             new_member.setEmail(memberJoinDTO.getEmail());
             new_member.setUsername(memberJoinDTO.getUsername());
             new_member.setPassword(passwordEncoder.encode(memberJoinDTO.getPassword()));
-            if (memberJoinDTO.getImage_file() != null) {
+
+            if (memberJoinDTO.getImage_file().getOriginalFilename() != null && !memberJoinDTO.getImage_file().getOriginalFilename().isEmpty()) {
                 new_member.setImage_path(imageService.upload(memberJoinDTO.getImage_file()));
             } else {
                 new_member.setImage_path("");
             }
-//            Optional<MultipartFile> optionalImageFile = Optional.ofNullable(memberJoinDTO.getImage_file());
-//            optionalImageFile.ifPresent(imageFile -> new_member.setImage_path(imageService.upload(imageFile)));
             return memberRepository.save(new_member).getId();
         }
         return (-1);

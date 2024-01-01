@@ -11,6 +11,7 @@ import project.maybedo.member.MemberRepository;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
