@@ -123,6 +123,26 @@ public class GroupService {
         return new_group;
     }
 
+    // 그룹 수정
+    public int update(int group_id, GroupUpdateDTO groupUpdateDTO, int member_id) {
+        Group group = groupRepository.findById(group_id)
+                .orElseThrow(()->new IllegalArgumentException("존재하지 않는 그룹 : " + group_id));
+        if (group.getLeader() != member_id)  // 그룹장과 수정하려는 사람의 아이디 비교
+            return (-1);
+        if (groupUpdateDTO.getName() != null)
+            group.setName(groupUpdateDTO.getName());
+        if (groupUpdateDTO.getLimit_member() != null)
+            group.setLimit_member(groupUpdateDTO.getLimit_member());
+        if (groupUpdateDTO.getDescription() != null)
+            group.setDescription(groupUpdateDTO.getDescription());
+        if (groupUpdateDTO.getImage_file() != null)
+            group.setImage_path(imageService.upload(groupUpdateDTO.getImage_file()));
+        // 해시태그도 추가하기..
+        groupRepository.save(group);
+        return (group_id);
+    }
+
+
     // 그룹의 멤버 찾아오기
     public List<Member> findMemberInGroup(int group_id)
     {

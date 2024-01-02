@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import project.maybedo.dto.ResponseDto;
 import project.maybedo.group.domain.Group;
 import project.maybedo.member.Member;
+import project.maybedo.member.memberDTO.MemberUpdateDTO;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -48,6 +49,16 @@ public class GroupController {
         Member member = (Member)session.getAttribute("principal");
         Group group = groupService.create(groupCreateDTO, member);
         return new ResponseDto<Group>(HttpStatus.OK.value(), group);
+    }
+
+    // 그룹 수정
+    @PutMapping("/group/{id}")
+    public ResponseDto<Integer> update(@PathVariable int id, GroupUpdateDTO groupUpdateDTO, HttpSession session) {
+        Member member = (Member) session.getAttribute("principal");
+        int result = groupService.update(id, groupUpdateDTO, member.getId());
+
+        // 권한이 없다(리더가 아님):-1, 성공:group_id
+        return new ResponseDto<Integer>(HttpStatus.OK.value(), result);
     }
 
     // 그룹 삭제
