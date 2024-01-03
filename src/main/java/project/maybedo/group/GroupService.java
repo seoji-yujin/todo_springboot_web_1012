@@ -137,7 +137,25 @@ public class GroupService {
             group.setDescription(groupUpdateDTO.getDescription());
         if (groupUpdateDTO.getImage_file() != null)
             group.setImage_path(imageService.upload(groupUpdateDTO.getImage_file()));
-        // 해시태그도 추가하기..
+        if (groupUpdateDTO.getTag() != null) {
+            List<String> tagContents = groupUpdateDTO.getTag();
+            for (String tagContent : tagContents) {
+                // 태그를 찾거나 새로 생성
+                Tag tag = tagRepository.findByContent(tagContent);
+                if (tag == null) {
+                    tag = new Tag();
+                    tag.setContent(tagContent);
+                    tagRepository.save(tag);
+                }
+
+                // 그룹과 태그 연결
+                GroupTag groupTag = new GroupTag();
+                groupTag.setGroup(group);
+                groupTag.setTag(tag);
+                group.getGroupTags().add(groupTag);
+                groupTagRepository.save(groupTag);
+            }
+        }
         groupRepository.save(group);
         return (group_id);
     }
