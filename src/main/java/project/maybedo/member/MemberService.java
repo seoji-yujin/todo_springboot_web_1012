@@ -123,16 +123,4 @@ public class MemberService {
         return (myGroups);
     }
 
-    // 달성률 매일 밤 초기화
-    @Scheduled(cron = "0 0 0 * * ?")  // 매일 밤 자정에 초기화 해주는 크론식
-    public void resetAchievement() {
-        List<Member> members = memberRepository.findAll();
-
-        for (Member member : members) {
-            member.setAchievement(0.0);
-        }
-
-        memberRepository.saveAll(members);
-    }
-
 }

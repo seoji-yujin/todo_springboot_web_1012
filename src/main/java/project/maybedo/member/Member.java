@@ -29,7 +29,6 @@ public class Member {
     private String password;
     private String message;
     private String image_path;
-    private double achievement;
 
     @JsonManagedReference
     @OneToMany(mappedBy = "member")

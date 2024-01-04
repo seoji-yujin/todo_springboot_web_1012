@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import project.maybedo.group.groupJoin.Join;
 import project.maybedo.member.Member;
 import project.maybedo.member.MemberRepository;
+import project.maybedo.streak.Streak;
+import project.maybedo.streak.StreakRepository;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -16,6 +18,7 @@ public class TodoService
 {
     private final TodoRepository todoRepository;
     private final MemberRepository memberRepository;
+    private final StreakRepository streakRepository;
 
     // 달성률 체크
     public void checkAchievement(Member member, LocalDate todoDate)
@@ -35,8 +38,10 @@ public class TodoService
                     success++;
             }
             double achievementPercentage = (double) success / size * 100;
-            member.setAchievement(achievementPercentage);
-            memberRepository.save(member);
+
+            Streak st = streakRepository.findByMemberAndDate(member, today);
+            st.setPercent(achievementPercentage);
+            streakRepository.save(st);
         }
     }
 
