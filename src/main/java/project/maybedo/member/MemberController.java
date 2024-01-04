@@ -35,13 +35,11 @@ public class MemberController {
     @PostMapping("/member/login")
     public ResponseDto<Integer> login(@RequestBody MemberLoginDTO memberLoginDTO, HttpSession session) {
         System.out.println("login 호출됨");
-        Member principal = memberService.login(memberLoginDTO.getUsername(), memberLoginDTO.getPassword());
+        int result = memberService.login(memberLoginDTO.getUsername(), memberLoginDTO.getPassword(), session);
 
-        if (principal != null)
-            session.setAttribute("principal", principal);
-        if (principal == null)
-            return new ResponseDto<Integer> (HttpStatus.OK.value(), -1);
-        return new ResponseDto<Integer> (HttpStatus.OK.value(), 1);
+        // 로그인 성공:멤버 아이디, 존재하지 않는 아이디:-1, 비밀번호 오류:-2
+        System.out.println("login result "+ result);
+        return new ResponseDto<Integer> (HttpStatus.OK.value(), result);
     }
 
     // 로그아웃

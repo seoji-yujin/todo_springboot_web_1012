@@ -123,6 +123,44 @@ public class GroupService {
         return new_group;
     }
 
+    // 그룹 수정
+    public int update(int group_id, GroupUpdateDTO groupUpdateDTO, int member_id) {
+        Group group = groupRepository.findById(group_id)
+                .orElseThrow(()->new IllegalArgumentException("존재하지 않는 그룹 : " + group_id));
+        if (group.getLeader() != member_id)  // 그룹장과 수정하려는 사람의 아이디 비교
+            return (-1);
+        if (groupUpdateDTO.getName() != null)
+            group.setName(groupUpdateDTO.getName());
+        if (groupUpdateDTO.getLimit_member() != null)
+            group.setLimit_member(groupUpdateDTO.getLimit_member());
+        if (groupUpdateDTO.getDescription() != null)
+            group.setDescription(groupUpdateDTO.getDescription());
+        if (groupUpdateDTO.getImage_file() != null)
+            group.setImage_path(imageService.upload(groupUpdateDTO.getImage_file()));
+        if (groupUpdateDTO.getTag() != null) {
+            List<String> tagContents = groupUpdateDTO.getTag();
+            for (String tagContent : tagContents) {
+                // 태그를 찾거나 새로 생성
+                Tag tag = tagRepository.findByContent(tagContent);
+                if (tag == null) {
+                    tag = new Tag();
+                    tag.setContent(tagContent);
+                    tagRepository.save(tag);
+                }
+
+                // 그룹과 태그 연결
+                GroupTag groupTag = new GroupTag();
+                groupTag.setGroup(group);
+                groupTag.setTag(tag);
+                group.getGroupTags().add(groupTag);
+                groupTagRepository.save(groupTag);
+            }
+        }
+        groupRepository.save(group);
+        return (group_id);
+    }
+
+
     // 그룹의 멤버 찾아오기
     public List<Member> findMemberInGroup(int group_id)
     {
