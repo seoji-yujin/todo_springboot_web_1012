@@ -9,6 +9,7 @@ import project.maybedo.maybedo.Maybedo;
 import project.maybedo.domain.Message;
 import project.maybedo.domain.Schedule;
 import project.maybedo.group.groupJoin.Join;
+import project.maybedo.streak.Streak;
 import project.maybedo.todo.Todo;
 
 import javax.persistence.*;
@@ -47,6 +48,10 @@ public class Member {
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Join> join_list = new ArrayList<>();
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "member")
+    private List<Streak> streak_list = new ArrayList<>();
 
 //    @OneToOne(mappedBy = "member", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 //    @JsonManagedReference
