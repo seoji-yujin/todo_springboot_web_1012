@@ -81,7 +81,10 @@ public class GroupService {
                 .orElseThrow(()->new IllegalArgumentException("존재하지 않는 멤버 : " + member_id));
 
         Join join = joinRepository.findByGroup_IdAndMember_Id(group_id, member_id);
-        joinRepository.delete(join);
+        if (group.getLeader() == member_id)
+            delete(group_id, member_id);
+        else
+            joinRepository.delete(join);
     }
 
     //  그룹 생성
