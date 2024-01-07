@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Getter @Setter
 public class GroupTodo {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "group_todo_id")
     private int id;
     private String content;

@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Getter @Setter
 public class GroupTag {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "group_tag_id")
     private int id;
 
