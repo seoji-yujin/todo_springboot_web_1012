@@ -92,7 +92,7 @@ public class GroupService {
         Group new_group = new Group();
         new_group.setLeader(member.getId());  // 그룹장 아이디
         new_group.setName(groupCreateDTO.getName());  // 그룹 이름
-        new_group.setExpire_date(LocalDate.now());
+        new_group.setCreation_date(LocalDate.now());
         new_group.setDescription(groupCreateDTO.getDescription());  // 그룹 소개
         new_group.setLimit_member(groupCreateDTO.getLimit_member());  // 그룹 최대 인원
         if (groupCreateDTO.getImage_file().getOriginalFilename() != null && !groupCreateDTO.getImage_file().getOriginalFilename().isEmpty()) {

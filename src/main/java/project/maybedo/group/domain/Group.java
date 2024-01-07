@@ -22,7 +22,7 @@ public class Group {
     private int id;
     private Integer leader;  // 그룹장의 아이디
     private String name;
-    private LocalDate expire_date;
+    private LocalDate creation_date;
     private Integer limit_member;
     private Integer cur_member;  // 현재 인원 수
     private String description;
