@@ -28,24 +28,24 @@ public class Group {
     private String description;
     private String image_path;
 
-    @OneToMany(mappedBy = "group")
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
     private List<GroupTodo> group_todo_list = new ArrayList<>();
 
-    @OneToMany(mappedBy = "group")
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<GroupNotice> notice_list = new ArrayList<>();
 
-    @OneToMany(mappedBy = "group")
-    private List<Message> message_list = new ArrayList<>();
+//    @OneToMany(mappedBy = "group")
+//    private List<Message> message_list = new ArrayList<>();
 
-    @OneToMany(mappedBy = "group")
-    private List<Select> select_list = new ArrayList<>();
+//    @OneToMany(mappedBy = "group")
+//    private List<Select> select_list = new ArrayList<>();
 
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Join> join_list = new ArrayList<>();
 
-    @OneToMany(mappedBy = "group")
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<GroupTag> groupTags = new ArrayList<>();
 }
