@@ -16,9 +16,11 @@ import project.maybedo.image.ImageRepository;
 import project.maybedo.image.ImageService;
 import project.maybedo.member.memberDTO.MemberJoinDTO;
 import project.maybedo.member.memberDTO.MemberUpdateDTO;
+import project.maybedo.streak.StreakService;
 import project.maybedo.todo.Todo;
 
 import javax.servlet.http.HttpSession;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -31,6 +33,7 @@ public class MemberService {
     private final JoinRepository joinRepository;
     private final ImageService imageService;
     private final ImageRepository imageRepository;
+    private final StreakService streakService;
 
     // 회원가입(email, username, password)
     @Transactional
@@ -51,7 +54,9 @@ public class MemberService {
             } else {
                 new_member.setImage_path("");
             }
-            return memberRepository.save(new_member).getId();
+            memberRepository.save(new_member);
+            streakService.setUserStreak(new_member, LocalDate.now());
+            return (new_member.getId());
         }
         return (-1);
     }
@@ -121,18 +126,6 @@ public class MemberService {
             myGroups.add(join.getGroup());
         }
         return (myGroups);
-    }
-
-    // 달성률 매일 밤 초기화
-    @Scheduled(cron = "0 0 0 * * ?")  // 매일 밤 자정에 초기화 해주는 크론식
-    public void resetAchievement() {
-        List<Member> members = memberRepository.findAll();
-
-        for (Member member : members) {
-            member.setAchievement(0.0);
-        }
-
-        memberRepository.saveAll(members);
     }
 
 }
