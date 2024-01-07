@@ -15,7 +15,7 @@ import java.util.List;
 @Getter @Setter
 public class Todo {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "todo_id")
     private int id;
     private String content;

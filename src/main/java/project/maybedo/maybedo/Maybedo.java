@@ -13,7 +13,7 @@ import java.util.Date;
 @Getter @Setter
 public class Maybedo {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "maybedo_id")
     private int id;
     private String content;

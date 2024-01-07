@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @Getter @Setter
 public class Join {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "join_id")
     private int id;
     private LocalDate date;

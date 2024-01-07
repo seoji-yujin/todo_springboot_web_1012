@@ -17,7 +17,7 @@ import java.util.List;
 @Getter @Setter
 public class Group {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "group_id")
     private int id;
     private Integer leader;  // 그룹장의 아이디

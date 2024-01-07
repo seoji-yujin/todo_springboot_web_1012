@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Getter @Setter
 public class GroupNotice {
         @Id
-        @GeneratedValue
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
         @Column(name = "group_notice_id")
         private int id;
         private String content;
