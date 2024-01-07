@@ -28,6 +28,20 @@ public class StreakService {
         return (streaks);
     }
 
+    // 특정 유저의 오늘 스트릭 생성
+    public void setUserStreak(Member member, LocalDate today) {
+
+        if (streakRepository.findByMemberAndDate(member, today) == null)
+        {
+            Streak streak = new Streak();
+
+            streak.setDate(today);
+            streak.setPercent(0);
+            streak.setMember(member);
+            streakRepository.save(streak);
+        }
+    }
+
     // 모든 멤버 매일 밤 12시에 새로운 스트릭 생성
     @Scheduled(cron = "0 0 0 * * ?")
     public void setTodayStreak() {
@@ -35,13 +49,7 @@ public class StreakService {
         LocalDate today = LocalDate.now();
 
         for (Member member : members) {
-
-            Streak streak = new Streak();
-            streak.setDate(today);
-            streak.setPercent(0);
-            streak.setMember(member);
-
-            streakRepository.save(streak);
+            setUserStreak(member, today);
         }
     }
 }
