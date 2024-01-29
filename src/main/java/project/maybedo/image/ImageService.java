@@ -26,7 +26,7 @@ public class ImageService {
         int idx = originFileName.lastIndexOf('.');
         String extension = originFileName.substring(idx);
 
-        String projectPath = System.getProperty("user.dir") + "/src/main/webapp/"; // 파일이 저장될 폴더의 경로
+        String projectPath = "/home/ec2-user/web/maybedo/backend/src/main/webapp/"; // 파일이 저장될 폴더의 경로
         String resultFileName = uuid + extension;
         File destinationFile = new File(projectPath + resultFileName);
 
